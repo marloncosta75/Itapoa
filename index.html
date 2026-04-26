@@ -846,6 +846,23 @@ function handleDriveClick() {
 }
 
 function driveConnect() {
+  if (typeof google === 'undefined' || !google.accounts) {
+    setTimeout(driveConnect, 800);
+    return;
+  }
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: DRIVE_SCOPES,
+    callback: async (resp) => {
+      if (resp.error) { console.error(resp); return; }
+      driveToken = resp.access_token;
+      await loadDriveUser();
+      showDriveBar();
+      openDrivePicker();
+    }
+  });
+  client.requestAccessToken();
+}
   const client = google.accounts.oauth2.initTokenClient({
     client_id: GOOGLE_CLIENT_ID,
     scope: DRIVE_SCOPES,
