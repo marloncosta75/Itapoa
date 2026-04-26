@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#C1714A">
+<title>Itapoã ✦ Camila & Marlon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --t:#C1714A;--tl:#E8956D;--tp:#F5E6DC;--td:#8B4A2F;
+  --cr:#FAF6F1;--ww:#FFFDF9;--bk:#5C3D2E;--pe:#F2C9B8;
+  --go:#D4A556;--lf:#7A8C5E;
+  --fd:'Cormorant Garamond',Georgia,serif;
+  --fb:'Jost',system-ui,sans-serif;
+}
+html,body{height:100%;font-family:var(--fb);background:var(--cr);color:var(--bk)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--tp)}
+::-webkit-scrollbar-thumb{background:var(--t);border-radius:2px}
+button{font-family:var(--fb);cursor:pointer}
+input,textarea,select{font-family:var(--fb)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(7deg)}}
+@keyframes bloom{0%{transform:scale(0) rotate(-20deg);opacity:0}70%{transform:scale(1.08) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes petalFall{0%{transform:translateY(-8vh) rotate(0deg);opacity:1}100%{transform:translateY(108vh) rotate(520deg);opacity:0}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+@keyframes popIn{0%{transform:scale(0.4);opacity:0}75%{transform:scale(1.06);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(5px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+@keyframes shimmer{0%,100%{opacity:.3}50%{opacity:.85}}
+@keyframes ringMergeL{to{transform:translateX(20px) scale(1.1)}}
+@keyframes ringMergeR{to{transform:translateX(-20px) scale(1.1)}}
+
+/* ── SCREEN SYSTEM ── */
+.screen{display:none}
+.screen.active{display:block}
+
+/* ═══════════════════════════════
+   AUTH SCREEN
+═══════════════════════════════ */
+#auth-screen{
+  position:fixed;inset:0;
+  background:linear-gradient(160deg,#2C1810 0%,var(--bk) 50%,var(--td) 100%);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;overflow:hidden;
+}
+#auth-screen.active{display:flex}
+.auth-float{position:absolute;opacity:.07;color:var(--tp);pointer-events:none;animation:float 8s ease-in-out infinite;line-height:1}
+.auth-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:28px;padding:48px 44px 40px;text-align:center;
+  width:min(380px,92vw);animation:fadeUp .6s ease both;
+}
+.auth-card.shake{animation:shake .5s both}
+.auth-flowers{font-size:18px;letter-spacing:12px;opacity:.5;margin-bottom:14px;color:var(--tl)}
+.auth-title{font-family:var(--fd);font-size:56px;font-weight:300;font-style:italic;color:var(--cr);letter-spacing:3px;line-height:1;margin-bottom:6px}
+.auth-sub{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:rgba(250,246,241,.4);margin-bottom:36px}
+.auth-input{
+  width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  border-radius:14px;padding:15px 20px;font-size:24px;color:var(--cr);text-align:center;
+  letter-spacing:10px;outline:none;transition:.3s;margin-bottom:12px;
+}
+.auth-input:focus{border-color:rgba(193,113,74,.8);background:rgba(255,255,255,.16)}
+.auth-btn{
+  width:100%;background:var(--t);border:none;border-radius:14px;padding:15px;
+  font-size:12px;letter-spacing:4px;text-transform:uppercase;color:white;transition:.25s;
+}
+.auth-btn:hover{background:var(--tl)}
+.auth-err{color:#F0997B;font-size:13px;min-height:18px;margin-top:4px}
+.auth-hint{margin-top:24px;font-size:11px;letter-spacing:2px;color:rgba(250,246,241,.22)}
+
+/* ═══════════════════════════════
+   CELEBRATION
+═══════════════════════════════ */
+#celebration{
+  display:none;position:fixed;inset:0;z-index:9990;
+  background:rgba(92,38,18,.92);align-items:center;justify-content:center;overflow:hidden;
+}
+#celebration.show{display:flex;animation:fadeUp .4s ease}
+.celeb-petal{position:absolute;top:0;pointer-events:none;opacity:.75;animation:petalFall linear infinite}
+.celeb-inner{position:relative;z-index:2;text-align:center;padding:32px 28px;animation:popIn .8s cubic-bezier(.34,1.56,.64,1) .3s both}
+.celeb-flowers{font-size:40px;letter-spacing:12px;margin-bottom:12px;animation:bloom 1s ease .5s both}
+.celeb-title{font-family:var(--fd);font-size:clamp(38px,7vw,58px);font-weight:300;font-style:italic;color:var(--cr);margin-bottom:8px}
+.celeb-sub{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--pe);opacity:.85;margin-bottom:28px}
+.celeb-photos{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:20px;animation:popIn .8s ease .9s both}
+.celeb-photo{width:90px;height:112px;border-radius:14px;border:3px solid var(--go);overflow:hidden;background:var(--tp);display:flex;align-items:center;justify-content:center}
+.celeb-photo img{width:100%;height:100%;object-fit:cover}
+.celeb-photo-name{font-family:var(--fd);font-size:13px;font-style:italic;color:var(--t)}
+.celeb-heart{font-size:32px;animation:heartbeat 1s ease infinite;margin-bottom:24px}
+.celeb-btn{background:var(--tl);border:none;border-radius:14px;padding:14px 40px;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:white;transition:.25s;animation:popIn .8s ease 1.5s both}
+.celeb-btn:hover{background:var(--t)}
+
+/* ═══════════════════════════════
+   APP SHELL
+═══════════════════════════════ */
+#app{display:none;flex-direction:column;min-height:100vh}
+#app.active{display:flex}
+.app-header{
+  background:linear-gradient(135deg,var(--bk),var(--td));
+  padding:14px 22px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
+.app-logo{font-family:var(--fd);font-size:28px;font-weight:300;font-style:italic;color:var(--cr);letter-spacing:3px;line-height:1}
+.app-tagline{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,246,241,.36);margin-top:2px}
+.app-header-flowers{font-size:16px;letter-spacing:6px;opacity:.25;color:var(--tl)}
+.tab-bar{display:flex;background:var(--bk);padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:12px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,241,.4);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:.25s;white-space:nowrap}
+.tab-btn:hover{color:rgba(250,246,241,.7)}
+.tab-btn.active{color:var(--tl);border-bottom-color:var(--tl)}
+.tab-content{display:none;flex:1}
+.tab-content.active{display:block}
+
+/* ═══════════════════════════════
+   TAB 1: CERIMÔNIA
+═══════════════════════════════ */
+.cer-bg{background:linear-gradient(180deg,var(--tp) 0%,var(--ww) 40%,var(--cr) 100%);min-height:calc(100vh - 110px);padding-bottom:48px}
+.page-header{text-align:center;padding:32px 20px 0}
+.page-floret{font-size:16px;letter-spacing:10px;color:var(--t);opacity:.4;margin-bottom:10px}
+.page-title{font-family:var(--fd);font-size:clamp(26px,5vw,38px);font-style:italic;color:var(--td);margin-bottom:8px}
+.divider{width:56px;height:1px;background:var(--t);margin:0 auto 28px;opacity:.35}
+
+.photos-row{display:flex;gap:20px;justify-content:center;align-items:flex-start;flex-wrap:wrap;padding:0 20px;margin-bottom:24px}
+.photo-block{display:flex;flex-direction:column;align-items:center;gap:10px}
+.photo-frame{
+  width:min(180px,38vw);height:min(222px,46vw);border-radius:18px;border:2px solid var(--t);
+  overflow:hidden;cursor:pointer;position:relative;background:var(--tp);
+  display:flex;align-items:center;justify-content:center;transition:.3s;
+}
+.photo-frame:hover{border-color:var(--tl);transform:translateY(-3px)}
+.photo-frame:hover .photo-overlay{opacity:1}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-placeholder{text-align:center;color:var(--t);opacity:.6}
+.photo-placeholder .icon{font-size:38px;margin-bottom:8px}
+.photo-placeholder .hint{font-size:11px;letter-spacing:1px}
+.photo-overlay{position:absolute;inset:0;background:rgba(139,74,47,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;color:white;font-size:12px;letter-spacing:2px}
+.photo-name{font-family:var(--fd);font-size:19px;font-style:italic;color:var(--td)}
+.photo-sep{font-size:20px;color:var(--t);opacity:.35;align-self:center;padding-top:36px}
+
+.section-wrap{padding:0 20px;margin-bottom:14px}
+.section-title{font-family:var(--fd);font-size:22px;font-style:italic;color:var(--td);text-align:center;margin-bottom:8px}
+.field-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--t);margin-bottom:6px;opacity:.85}
+
+.acordos-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.acordo-block{width:min(240px,90vw)}
+.acordo-textarea{width:100%;height:110px;border:1.5px solid var(--t);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--bk);background:var(--ww);resize:none;outline:none;line-height:1.65;transition:.25s}
+.acordo-textarea:focus{border-color:var(--tl);box-shadow:0 0 0 3px rgba(193,113,74,.1)}
+.acordo-btns{display:flex;gap:8px;margin-top:7px}
+.btn-terra{padding:7px 16px;font-size:11px;letter-spacing:1px;border-radius:8px;background:var(--t);color:white;border:none;transition:.25s}
+.btn-terra:hover{background:var(--tl)}
+.btn-terra.saved{background:var(--lf)}
+.btn-outline{padding:7px 16px;font-size:11px;letter-spacing:1px;border-radius:8px;background:transparent;color:var(--t);border:1.5px solid var(--t);transition:.25s}
+.btn-outline:hover{background:var(--tp)}
+
+.timeline-card{background:var(--ww);border:1px solid var(--pe);border-radius:20px;padding:20px 18px;max-width:520px;margin:0 auto}
+.date-input{width:100%;border:1.5px solid var(--t);border-radius:10px;padding:9px 12px;font-size:14px;color:var(--bk);background:var(--cr);outline:none;margin-bottom:12px;transition:.25s}
+.date-input:focus{border-color:var(--tl)}
+.together-text{font-family:var(--fd);font-size:21px;font-style:italic;color:var(--td);text-align:center;animation:fadeUp .4s ease}
+.together-detail{text-align:center;font-size:12px;color:var(--t);letter-spacing:1.5px;margin-top:4px;opacity:.7}
+.together-placeholder{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t);opacity:.4;text-align:center}
+
+.rings-section{text-align:center;padding:8px 20px 16px}
+.rings-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--t);opacity:.5;margin-bottom:12px}
+.rings-row{display:flex;align-items:center;justify-content:center;gap:12px}
+.ring{width:52px;height:52px;border-radius:50%;transition:transform 1.2s cubic-bezier(.34,1.56,.64,1)}
+.ring-c{border:6px solid var(--go)}
+.ring-m{border:6px solid #A8936A}
+.ring-c.merged{transform:translateX(20px) scale(1.1)}
+.ring-m.merged{transform:translateX(-20px) scale(1.1)}
+.ring-connector{width:32px;height:2px;background:var(--go);opacity:.3;transition:opacity .5s}
+.ring-connector.active{opacity:.8}
+.ring-floret{font-size:18px;color:var(--t);opacity:.5;animation:shimmer 3s ease-in-out infinite}
+.rings-msg{margin-top:12px;font-family:var(--fd);font-size:15px;font-style:italic;color:var(--td);animation:fadeUp .5s ease;display:none}
+.rings-msg.show{display:block}
+
+.question-card{background:linear-gradient(135deg,var(--tp),var(--pe));border:1px solid rgba(242,201,184,.6);border-radius:22px;padding:24px 20px;max-width:500px;margin:0 auto;text-align:center}
+.question-floret{font-size:14px;letter-spacing:8px;color:var(--t);opacity:.5;margin-bottom:10px}
+.question-text{font-family:var(--fd);font-size:clamp(20px,4vw,28px);font-style:italic;color:var(--td);margin-bottom:18px}
+.answers-row{display:flex;gap:16px;justify-content:center;align-items:flex-end;flex-wrap:wrap}
+.answer-block{display:flex;flex-direction:column;align-items:center;gap:6px}
+.answer-name{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--t);opacity:.8}
+.answer-select{padding:9px 14px;border:2px solid var(--t);border-radius:10px;font-family:var(--fd);font-size:14px;font-style:italic;color:var(--bk);background:var(--ww);outline:none;cursor:pointer;min-width:130px;transition:.3s}
+.answer-select.yes{border-color:var(--lf);color:var(--lf);background:rgba(122,140,94,.06)}
+.and-sign{font-family:var(--fd);font-size:26px;font-style:italic;color:var(--t);opacity:.5;padding-bottom:8px}
+.both-yes-msg{margin-top:18px;font-family:var(--fd);font-size:17px;font-style:italic;color:var(--td);animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;display:none}
+.both-yes-msg.show{display:block}
+.bottom-floret{text-align:center;font-size:16px;letter-spacing:10px;color:var(--t);opacity:.2;padding:24px 0 0}
+
+/* ═══════════════════════════════
+   TAB 2: BIBLIOTECA
+═══════════════════════════════ */
+.lib-bg{background:var(--cr);min-height:calc(100vh - 110px);padding:24px 20px 48px}
+.lib-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.lib-title{font-family:var(--fd);font-size:clamp(22px,4vw,32px);font-style:italic;color:var(--td)}
+.lib-subtitle{font-size:11px;color:var(--t);letter-spacing:2px;opacity:.6;margin-top:3px}
+.lib-actions{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}
+.btn-add{background:var(--t);border:none;border-radius:12px;padding:10px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:white;transition:.25s;flex-shrink:0}
+.btn-add:hover{background:var(--tl)}
+.btn-drive{display:flex;align-items:center;gap:7px;background:white;border:1.5px solid #dadce0;border-radius:12px;padding:9px 16px;font-size:11px;letter-spacing:1px;color:#3c4043;cursor:pointer;transition:.25s;flex-shrink:0;font-family:var(--fb)}
+.btn-drive:hover{background:#f8f9fa;border-color:#bbb;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.btn-drive.connected{border-color:var(--lf);color:var(--lf)}
+.drive-bar{background:white;border:1px solid #e8e8e8;border-radius:14px;padding:12px 16px;margin-bottom:16px;display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.drive-bar.show{display:flex}
+.drive-bar-left{display:flex;align-items:center;gap:10px}
+.drive-avatar-initials{width:32px;height:32px;border-radius:50%;background:var(--t);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:white;flex-shrink:0}
+.drive-user-name{font-size:13px;font-weight:500;color:var(--bk)}
+.drive-user-email{font-size:11px;color:var(--t);opacity:.7}
+.drive-bar-right{display:flex;gap:8px}
+.btn-drive-import{background:var(--t);border:none;border-radius:10px;padding:8px 16px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:white;cursor:pointer;transition:.25s}
+.btn-drive-import:hover{background:var(--tl)}
+.btn-drive-disconnect{background:transparent;border:1px solid #ddd;border-radius:10px;padding:8px 14px;font-size:11px;color:#888;cursor:pointer;transition:.25s}
+.btn-drive-disconnect:hover{border-color:#bbb;color:#555}
+.drive-picker-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.drive-picker-overlay.show{display:flex}
+.drive-picker-modal{background:white;border-radius:20px;padding:28px 24px;width:min(560px,95vw);max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.picker-title{font-family:var(--fd);font-size:22px;font-style:italic;color:var(--td);margin-bottom:4px}
+.picker-sub{font-size:12px;color:var(--t);opacity:.7;margin-bottom:18px;letter-spacing:1px}
+.picker-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-bottom:18px;max-height:320px;overflow-y:auto}
+.picker-file{border:2px solid transparent;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:1;transition:.2s}
+.picker-file:hover{border-color:var(--t)}
+.picker-file.selected{border-color:var(--t)}
+.picker-file img{width:100%;height:100%;object-fit:cover;display:block}
+.picker-file-name{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:white;font-size:9px;padding:3px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.picker-empty{text-align:center;padding:40px 20px;color:var(--t);opacity:.5;font-family:var(--fd);font-size:16px;font-style:italic;grid-column:1/-1}
+.picker-actions{display:flex;gap:10px;justify-content:flex-end;border-top:1px solid #f0f0f0;padding-top:16px}
+.btn-picker-confirm{background:var(--t);border:none;border-radius:10px;padding:10px 22px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:white;cursor:pointer;transition:.25s}
+.btn-picker-confirm:hover{background:var(--tl)}
+.btn-picker-cancel{background:transparent;border:1px solid #ddd;border-radius:10px;padding:10px 18px;font-size:12px;color:#888;cursor:pointer}
+.picker-loading{text-align:center;padding:40px;color:var(--t);opacity:.6;font-family:var(--fd);font-size:16px;font-style:italic;grid-column:1/-1}
+.drive-config-banner{background:linear-gradient(135deg,var(--tp),#fff);border:1px solid var(--pe);border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:12px;color:var(--td);line-height:1.6;display:none}
+.drive-config-banner.show{display:block}
+.drive-config-banner code{background:rgba(193,113,74,.12);padding:1px 5px;border-radius:4px;font-size:11px;font-family:monospace}
+.lib-empty{text-align:center;padding:60px 20px;animation:fadeUp .5s ease}
+.lib-empty-icon{font-size:48px;color:var(--t);opacity:.28;margin-bottom:12px}
+.lib-empty-text{font-family:var(--fd);font-size:20px;font-style:italic;color:var(--t);opacity:.5;margin-bottom:20px}
+.btn-start{background:transparent;border:1.5px solid var(--t);border-radius:12px;padding:11px 26px;font-size:12px;letter-spacing:2px;color:var(--t);transition:.25s}
+.btn-start:hover{background:var(--tp)}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.photo-card{background:var(--ww);border:1px solid var(--pe);border-radius:20px;overflow:hidden;transition:.3s;animation:fadeUp .4s ease both}
+.photo-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(193,113,74,.12)}
+.photo-card:hover .card-img{transform:scale(1.04)}
+.card-img-wrap{width:100%;height:200px;overflow:hidden;position:relative;background:var(--tp)}
+.card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.card-delete{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.88);border:none;border-radius:50%;width:26px;height:26px;font-size:11px;color:var(--t);cursor:pointer;opacity:0;transition:opacity .25s;display:flex;align-items:center;justify-content:center}
+.photo-card:hover .card-delete{opacity:1}
+.card-body{padding:14px}
+.card-field{margin-bottom:11px}
+.field-input{width:100%;border:1px solid var(--pe);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--bk);background:var(--cr);outline:none;transition:.25s}
+.field-input:focus{border-color:var(--t);background:var(--ww)}
+.date-friendly{font-size:11px;color:var(--t);margin-top:3px;opacity:.7}
+.field-textarea{width:100%;border:1px solid var(--pe);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--bk);background:var(--cr);resize:none;outline:none;line-height:1.6;height:80px;transition:.25s}
+.field-textarea:focus{border-color:var(--t);background:var(--ww)}
+.loc-wrap{position:relative}
+.loc-suggestions{position:absolute;top:calc(100% + 3px);left:0;right:0;background:white;border:1px solid var(--t);border-radius:8px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.1);max-height:150px;overflow-y:auto;display:none}
+.loc-suggestions.open{display:block}
+.loc-opt{padding:8px 11px;font-size:13px;color:var(--bk);cursor:pointer;border-bottom:.5px solid var(--tp)}
+.loc-opt:last-child{border-bottom:none}
+.loc-opt:hover{background:var(--tp)}
+
+/* ═══════════════════════════════
+   TAB 3: NOSSA HISTÓRIA
+═══════════════════════════════ */
+.story-bg{background:linear-gradient(180deg,#2C1810 0%,var(--bk) 30%,var(--td) 70%,var(--t) 100%);min-height:calc(100vh - 110px);padding-bottom:48px;color:var(--cr)}
+.story-hero{text-align:center;padding:36px 20px 24px}
+.story-floret{font-size:18px;letter-spacing:10px;opacity:.32;margin-bottom:12px}
+.story-title{font-family:var(--fd);font-size:clamp(38px,7vw,54px);font-weight:300;font-style:italic;margin-bottom:5px}
+.story-sub{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(250,246,241,.32);margin-bottom:22px}
+.story-pair{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:4px;flex-wrap:wrap}
+.story-photo{width:160px;height:200px;border-radius:18px;border:2.5px solid var(--go);overflow:hidden;background:var(--tp);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:.3s}
+.story-photo:hover{border-color:#EDD08A;transform:translateY(-3px)}
+.story-photo:hover .story-photo-overlay{opacity:1}
+.story-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.story-photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--t);opacity:.6}
+.story-photo-placeholder .sp-icon{font-size:32px}
+.story-photo-placeholder .sp-name{font-family:var(--fd);font-size:15px;font-style:italic}
+.story-photo-placeholder .sp-hint{font-size:10px;letter-spacing:1px;opacity:.7}
+.story-photo-overlay{position:absolute;inset:0;background:rgba(139,74,47,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;color:white;font-size:11px;letter-spacing:2px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 20px;max-width:480px;margin:0 auto 14px}
+.stat-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 10px;text-align:center}
+.stat-num{font-family:var(--fd);font-size:clamp(26px,5vw,36px);font-weight:300;font-style:italic;color:var(--tl)}
+.stat-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,241,.36);margin-top:3px}
+.together-phrase{text-align:center;font-family:var(--fd);font-size:clamp(14px,3vw,18px);font-style:italic;color:rgba(250,246,241,.58);padding:0 24px 24px;max-width:480px;margin:0 auto}
+.tl-section{padding:0 20px;max-width:560px;margin:0 auto}
+.tl-title{font-family:var(--fd);font-size:24px;font-weight:300;font-style:italic;opacity:.82;margin-bottom:7px}
+.tl-div{width:44px;height:1px;background:var(--tl);opacity:.4;margin-bottom:20px}
+.tl-empty{font-family:var(--fd);font-size:16px;font-style:italic;color:rgba(250,246,241,.32);text-align:center;padding:24px 0}
+.tl-list{}
+.tl-item{display:flex;gap:14px;margin-bottom:22px;animation:fadeUp .4s ease both}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:13px}
+.tl-dot{width:11px;height:11px;border-radius:50%;background:var(--tl);box-shadow:0 0 0 3px rgba(232,149,109,.2);flex-shrink:0;margin-top:4px}
+.tl-line{width:2px;flex:1;background:rgba(232,149,109,.18);margin:5px 0;min-height:20px}
+.tl-content{flex:1}
+.tl-date{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,241,.42);margin-bottom:3px}
+.tl-loc{font-family:var(--fd);font-size:16px;font-style:italic;margin-bottom:3px}
+.tl-desc{font-size:12px;color:rgba(250,246,241,.52);line-height:1.6;margin-bottom:7px}
+.tl-thumb{width:100%;max-width:240px;height:120px;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.tl-thumb img{width:100%;height:100%;object-fit:cover}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     AUTH SCREEN
+═══════════════════════════════ -->
+<div id="auth-screen" class="active">
+  <span class="auth-float" style="top:8%;left:6%;font-size:90px;animation-delay:0s">✿</span>
+  <span class="auth-float" style="top:14%;right:7%;font-size:64px;animation-delay:2s">❀</span>
+  <span class="auth-float" style="bottom:18%;left:10%;font-size:74px;animation-delay:4s">✾</span>
+  <span class="auth-float" style="bottom:26%;right:5%;font-size:50px;animation-delay:1s">✿</span>
+  <span class="auth-float" style="top:5%;left:44%;font-size:44px;animation-delay:3s">❀</span>
+  <div class="auth-card" id="auth-card">
+    <div class="auth-flowers">✿ ❀ ✾</div>
+    <div class="auth-title">Itapoã</div>
+    <div class="auth-sub">Camila & Marlon</div>
+    <input class="auth-input" id="auth-input" type="password" placeholder="••••••" maxlength="6" autocomplete="current-password">
+    <button class="auth-btn" onclick="doAuth()">Entrar ✦</button>
+    <div class="auth-err" id="auth-err"></div>
+    <p class="auth-hint">Um espaço só de vocês dois ✦</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     CELEBRATION
+═══════════════════════════════ -->
+<div id="celebration">
+  <div class="celeb-inner">
+    <div class="celeb-flowers">✿ ❀ ✾</div>
+    <div class="celeb-title">Sim, eu aceito!</div>
+    <p class="celeb-sub">Camila & Marlon — Para Sempre ✦</p>
+    <div class="celeb-photos">
+      <div class="celeb-photo" id="celeb-photo-c">
+        <span class="celeb-photo-name" id="celeb-name-c">Camila</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div class="celeb-heart">💍</div>
+      </div>
+      <div class="celeb-photo" id="celeb-photo-m">
+        <span class="celeb-photo-name" id="celeb-name-m">Marlon</span>
+      </div>
+    </div>
+    <button class="celeb-btn" onclick="closeCelebration()">Nosso Sim ✦</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     APP
+═══════════════════════════════ -->
+<div id="app">
+  <div class="app-header">
+    <div>
+      <div class="app-logo">Itapoã</div>
+      <div class="app-tagline">Uma história de amor ✦</div>
+    </div>
+    <div class="app-header-flowers">✿ ❀ ✾</div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('ceremony',this)">✦ Cerimônia</button>
+    <button class="tab-btn" onclick="switchTab('library',this)">❀ Biblioteca</button>
+    <button class="tab-btn" onclick="switchTab('story',this)">✾ Nossa História</button>
+  </div>
+
+  <!-- TAB 1: CERIMÔNIA -->
+  <div id="tab-ceremony" class="tab-content active">
+    <div class="cer-bg">
+      <div class="page-header">
+        <div class="page-floret">✿ ❀ ✾ ❀ ✿</div>
+        <div class="page-title">Cerimônia do Noivado</div>
+        <div class="divider"></div>
+      </div>
+
+      <!-- Photos -->
+      <div class="photos-row">
+        <div class="photo-block">
+          <div class="photo-frame" id="frame-c" onclick="document.getElementById('file-c').click()">
+            <div class="photo-placeholder" id="ph-c">
+              <div class="icon">✿</div>
+              <div class="hint">Clique para adicionar</div>
+            </div>
+            <div class="photo-overlay">✦ Alterar</div>
+          </div>
+          <input type="file" id="file-c" accept="image/*" style="display:none" onchange="loadPhoto(this,'frame-c','ph-c','celeb-photo-c','celeb-name-c','photoC')">
+          <div class="photo-name">Camila Ventura</div>
+        </div>
+        <div class="photo-sep">✦</div>
+        <div class="photo-block">
+          <div class="photo-frame" id="frame-m" onclick="document.getElementById('file-m').click()">
+            <div class="photo-placeholder" id="ph-m">
+              <div class="icon">❀</div>
+              <div class="hint">Clique para adicionar</div>
+            </div>
+            <div class="photo-overlay">✦ Alterar</div>
+          </div>
+          <input type="file" id="file-m" accept="image/*" style="display:none" onchange="loadPhoto(this,'frame-m','ph-m','celeb-photo-m','celeb-name-m','photoM')">
+          <div class="photo-name">Marlon Costa</div>
+        </div>
+      </div>
+
+      <!-- Acordos -->
+      <div class="section-wrap">
+        <div style="text-align:center;margin-bottom:14px">
+          <div class="section-title">Acordos do Casal</div>
+          <div class="divider" style="margin-bottom:0"></div>
+        </div>
+        <div class="acordos-row">
+          <div class="acordo-block">
+            <div class="field-label">Acordos de Camila</div>
+            <textarea class="acordo-textarea" id="acordo-c" placeholder="Escreva seus votos e acordos especiais..." oninput="saveState()"></textarea>
+            <div class="acordo-btns">
+              <button class="btn-terra" id="save-c" onclick="saveAcordo('c')">Salvar</button>
+              <button class="btn-outline" onclick="clearAcordo('c')">Limpar</button>
+            </div>
+          </div>
+          <div class="acordo-block">
+            <div class="field-label">Acordos de Marlon</div>
+            <textarea class="acordo-textarea" id="acordo-m" placeholder="Escreva seus votos e acordos especiais..." oninput="saveState()"></textarea>
+            <div class="acordo-btns">
+              <button class="btn-terra" id="save-m" onclick="saveAcordo('m')">Salvar</button>
+              <button class="btn-outline" onclick="clearAcordo('m')">Limpar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="section-wrap">
+        <div class="timeline-card">
+          <div class="field-label">Desde quando estamos juntos?</div>
+          <input type="date" class="date-input" id="start-date" onchange="calcTogether()">
+          <div id="together-text" class="together-placeholder">Escolha a data especial ✦</div>
+          <div id="together-detail" class="together-detail" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- Rings -->
+      <div class="rings-section">
+        <div class="rings-label">Alianças</div>
+        <div class="rings-row">
+          <span class="ring-floret">✿</span>
+          <div class="ring ring-c" id="ring-c"></div>
+          <div class="ring-connector" id="ring-conn"></div>
+          <div class="ring ring-m" id="ring-m"></div>
+          <span class="ring-floret" style="animation-delay:1.5s">❀</span>
+        </div>
+        <div class="rings-msg" id="rings-msg">💍 Unidos para sempre 💍</div>
+      </div>
+
+      <!-- Question -->
+      <div class="section-wrap">
+        <div class="question-card">
+          <div class="question-floret">✿ ❀ ✾</div>
+          <div class="question-text">Você aceita casar comigo?</div>
+          <div class="answers-row">
+            <div class="answer-block">
+              <div class="answer-name">Camila</div>
+              <select class="answer-select" id="ans-c" onchange="checkAnswers()">
+                <option value="">Responder...</option>
+                <option value="sim">Sim, aceito ✦</option>
+                <option value="nao">Não</option>
+              </select>
+            </div>
+            <div class="and-sign">e</div>
+            <div class="answer-block">
+              <div class="answer-name">Marlon</div>
+              <select class="answer-select" id="ans-m" onchange="checkAnswers()">
+                <option value="">Responder...</option>
+                <option value="sim">Sim, aceito ✦</option>
+                <option value="nao">Não</option>
+              </select>
+            </div>
+          </div>
+          <div class="both-yes-msg" id="both-yes">Vocês dois disseram Sim! 💍</div>
+        </div>
+      </div>
+
+      <div class="bottom-floret">✿ ❀ ✾ ❀ ✿</div>
+    </div>
+  </div>
+
+  <!-- TAB 2: BIBLIOTECA -->
+  <div id="tab-library" class="tab-content">
+    <div class="lib-bg">
+      <div class="lib-header">
+        <div>
+          <div class="lib-title">Biblioteca de Memórias</div>
+          <div class="lib-subtitle">Cada foto, uma história ✦</div>
+        </div>
+        <div class="lib-actions">
+          <!-- Google Drive Button -->
+          <button class="btn-drive" id="btn-drive" onclick="handleDriveClick()">
+            <svg width="16" height="16" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+              <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+              <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/>
+              <path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/>
+              <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/>
+              <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/>
+              <path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+            </svg>
+            <span id="btn-drive-label">Google Drive</span>
+          </button>
+          <button class="btn-add" onclick="document.getElementById('file-lib').click()">✿ Adicionar Foto</button>
+          <input type="file" id="file-lib" accept="image/*" multiple style="display:none" onchange="addLibPhotos(this)">
+        </div>
+      </div>
+
+      <!-- Config banner — shown when CLIENT_ID not set -->
+      <div class="drive-config-banner" id="drive-config-banner">
+        ⚙️ Para ativar o Google Drive, abra o arquivo HTML e substitua <code>SEU_CLIENT_ID_AQUI</code> pelo seu Client ID do Google Cloud. Veja o guia no README.
+      </div>
+
+      <!-- Drive connected bar -->
+      <div class="drive-bar" id="drive-bar">
+        <div class="drive-bar-left">
+          <div class="drive-avatar-initials" id="drive-initials">?</div>
+          <div>
+            <div class="drive-user-name" id="drive-user-name">Conectado</div>
+            <div class="drive-user-email" id="drive-user-email"></div>
+          </div>
+        </div>
+        <div class="drive-bar-right">
+          <button class="btn-drive-import" onclick="openDrivePicker()">📂 Importar fotos</button>
+          <button class="btn-drive-disconnect" onclick="driveDisconnect()">Desconectar</button>
+        </div>
+      </div>
+
+      <div id="lib-empty" class="lib-empty">
+        <div class="lib-empty-icon">✿</div>
+        <div class="lib-empty-text">Adicione sua primeira memória</div>
+        <button class="btn-start" onclick="document.getElementById('file-lib').click()">✦ Começar a biblioteca</button>
+      </div>
+      <div class="photo-grid" id="photo-grid"></div>
+    </div>
+  </div>
+
+  <!-- Drive Picker Modal -->
+  <div class="drive-picker-overlay" id="drive-picker-overlay" onclick="if(event.target===this)closeDrivePicker()">
+    <div class="drive-picker-modal">
+      <div class="picker-title">Suas fotos no Drive</div>
+      <div class="picker-sub">Selecione as fotos que deseja importar para a biblioteca</div>
+      <div class="picker-files" id="picker-files">
+        <div class="picker-loading">Carregando suas fotos... ✿</div>
+      </div>
+      <div class="picker-actions">
+        <button class="btn-picker-cancel" onclick="closeDrivePicker()">Cancelar</button>
+        <button class="btn-picker-confirm" onclick="confirmDriveImport()">Importar selecionadas ✦</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: NOSSA HISTÓRIA -->
+  <div id="tab-story" class="tab-content">
+    <div class="story-bg">
+      <div class="story-hero">
+        <div class="story-floret">✿ ❀ ✾</div>
+        <div class="story-title">Nossa História</div>
+        <p class="story-sub">Camila & Marlon ✦ Para Sempre</p>
+        <div class="story-pair" id="story-pair">
+          <div class="story-photo" id="story-photo-c" onclick="document.getElementById('file-story-c').click()">
+            <div class="story-photo-placeholder" id="sph-c">
+              <div class="sp-icon">✿</div>
+              <div class="sp-name">Camila</div>
+              <div class="sp-hint">Clique para adicionar</div>
+            </div>
+            <div class="story-photo-overlay">✦ Alterar</div>
+          </div>
+          <input type="file" id="file-story-c" accept="image/*" style="display:none" onchange="loadStoryPhoto(this,'story-photo-c','sph-c','celeb-photo-c','celeb-name-c','photoC')">
+
+          <div style="font-size:28px;animation:heartbeat 1.4s ease-in-out infinite">💍</div>
+
+          <div class="story-photo" id="story-photo-m" onclick="document.getElementById('file-story-m').click()">
+            <div class="story-photo-placeholder" id="sph-m">
+              <div class="sp-icon">❀</div>
+              <div class="sp-name">Marlon</div>
+              <div class="sp-hint">Clique para adicionar</div>
+            </div>
+            <div class="story-photo-overlay">✦ Alterar</div>
+          </div>
+          <input type="file" id="file-story-m" accept="image/*" style="display:none" onchange="loadStoryPhoto(this,'story-photo-m','sph-m','celeb-photo-m','celeb-name-m','photoM')">
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" id="stat-days">—</div><div class="stat-lbl">Dias Juntos</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-months">—</div><div class="stat-lbl">Meses</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-photos">0</div><div class="stat-lbl">Memórias</div></div>
+      </div>
+      <div class="together-phrase" id="story-phrase" style="display:none"></div>
+      <div class="tl-section">
+        <div class="tl-title">Linha do Tempo</div>
+        <div class="tl-div"></div>
+        <div class="tl-list" id="tl-list">
+          <div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua linha do tempo ✿</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ────────────────────────────────────────────────
+const STATE = {
+  photoC: '', photoM: '',
+  acordoC: '', acordoM: '',
+  startDate: '',
+  answers: {c: '', m: ''},
+  library: []
+};
+const PASS = '161124';
+
+// ── PERSIST ──────────────────────────────────────────────
+function saveState() {
+  try { localStorage.setItem('itapoa', JSON.stringify(STATE)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem('itapoa') || '{}');
+    if (s.photoC) { STATE.photoC = s.photoC; setPhotoPreview('frame-c','ph-c',s.photoC); setCelebPhoto('celeb-photo-c','celeb-name-c',s.photoC); setTimeout(()=>setStoryPhoto('story-photo-c',s.photoC),50); }
+    if (s.photoM) { STATE.photoM = s.photoM; setPhotoPreview('frame-m','ph-m',s.photoM); setCelebPhoto('celeb-photo-m','celeb-name-m',s.photoM); setTimeout(()=>setStoryPhoto('story-photo-m',s.photoM),50); }
+    if (s.acordoC) { STATE.acordoC = s.acordoC; document.getElementById('acordo-c').value = s.acordoC; }
+    if (s.acordoM) { STATE.acordoM = s.acordoM; document.getElementById('acordo-m').value = s.acordoM; }
+    if (s.startDate) { STATE.startDate = s.startDate; document.getElementById('start-date').value = s.startDate; calcTogether(); }
+    if (s.answers) { STATE.answers = s.answers; restoreAnswers(); }
+    if (s.library) { STATE.library = s.library; renderLibrary(); }
+  } catch(e) {}
+}
+
+// ── AUTH ─────────────────────────────────────────────────
+document.getElementById('auth-input').addEventListener('keydown', e => { if (e.key === 'Enter') doAuth(); });
+function doAuth() {
+  const v = document.getElementById('auth-input').value;
+  if (v === PASS) {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    loadState();
+  } else {
+    document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
+    const card = document.getElementById('auth-card');
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+    document.getElementById('auth-input').value = '';
+    setTimeout(() => { document.getElementById('auth-err').textContent = ''; card.classList.remove('shake'); }, 2200);
+  }
+}
+
+// ── TABS ─────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'story') updateStoryTab();
+}
+
+// ── IMAGE COMPRESS ────────────────────────────────────────
+function compressCrop(file, w, h, cb) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      const s = Math.max(w / img.width, h / img.height);
+      ctx.drawImage(img, (w - img.width*s)/2, (h - img.height*s)/2, img.width*s, img.height*s);
+      cb(canvas.toDataURL('image/jpeg', 0.82));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function compressImg(file, maxW, cb) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width*s; canvas.height = img.height*s;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      cb(canvas.toDataURL('image/jpeg', 0.78));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── PHOTOS (CEREMONY) ────────────────────────────────────
+function setPhotoPreview(frameId, phId, src) {
+  const frame = document.getElementById(frameId);
+  document.getElementById(phId).style.display = 'none';
+  let img = frame.querySelector('img');
+  if (!img) { img = document.createElement('img'); frame.insertBefore(img, frame.firstChild); }
+  img.src = src; img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+}
+function setCelebPhoto(elId, nameId, src) {
+  const el = document.getElementById(elId);
+  el.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover">`;
+}
+function setStoryPhoto(elId, src) {
+  const el = document.getElementById(elId);
+  // hide placeholder if present
+  const ph = el.querySelector('.story-photo-placeholder');
+  if (ph) ph.style.display = 'none';
+  let img = el.querySelector('img');
+  if (!img) { img = document.createElement('img'); el.insertBefore(img, el.querySelector('.story-photo-overlay')); }
+  img.src = src; img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0';
+  el.style.position = 'relative';
+}
+function loadPhoto(input, frameId, phId, celebId, nameId, stateKey) {
+  const file = input.files[0]; if (!file) return;
+  compressCrop(file, 400, 500, src => {
+    STATE[stateKey] = src;
+    setPhotoPreview(frameId, phId, src);
+    setCelebPhoto(celebId, nameId, src);
+    const storyId = stateKey === 'photoC' ? 'story-photo-c' : 'story-photo-m';
+    setStoryPhoto(storyId, src);
+    saveState();
+  });
+  input.value = '';
+}
+// Upload diretamente da aba Nossa História
+function loadStoryPhoto(input, storyId, phId, celebId, nameId, stateKey) {
+  const file = input.files[0]; if (!file) return;
+  compressCrop(file, 400, 500, src => {
+    STATE[stateKey] = src;
+    setStoryPhoto(storyId, src);
+    setCelebPhoto(celebId, nameId, src);
+    // sync ceremony tab too
+    const frameId = stateKey === 'photoC' ? 'frame-c' : 'frame-m';
+    const framePh = stateKey === 'photoC' ? 'ph-c' : 'ph-m';
+    setPhotoPreview(frameId, framePh, src);
+    saveState();
+  });
+  input.value = '';
+}
+
+// ── ACORDOS ──────────────────────────────────────────────
+function saveAcordo(who) {
+  STATE['acordo' + who.toUpperCase()] = document.getElementById('acordo-' + who).value;
+  saveState();
+  const btn = document.getElementById('save-' + who);
+  btn.textContent = '✓ Salvo'; btn.classList.add('saved');
+  setTimeout(() => { btn.textContent = 'Salvar'; btn.classList.remove('saved'); }, 1800);
+}
+function clearAcordo(who) {
+  document.getElementById('acordo-' + who).value = '';
+  STATE['acordo' + who.toUpperCase()] = '';
+  saveState();
+}
+
+// ── TIMELINE ─────────────────────────────────────────────
+function calcTogether() {
+  const d = document.getElementById('start-date').value;
+  if (!d) return;
+  STATE.startDate = d; saveState();
+  const start = new Date(d + 'T12:00:00'), now = new Date();
+  const diff = Math.floor((now - start) / 86400000);
+  const txtEl = document.getElementById('together-text');
+  const detEl = document.getElementById('together-detail');
+  if (diff < 0) { txtEl.className = 'together-text'; txtEl.textContent = 'Data no futuro...'; detEl.style.display = 'none'; return; }
+  const y = Math.floor(diff/365), rem = diff - y*365, mo = Math.floor(rem/30), da = rem%30;
+  let p = 'Juntos há ';
+  if (y > 0) p += y + ' ano' + (y > 1 ? 's' : '') + ', ';
+  if (mo > 0) p += mo + ' ' + (mo > 1 ? 'meses' : 'mês') + ' e ';
+  p += da + ' dia' + (da !== 1 ? 's' : '');
+  txtEl.className = 'together-text'; txtEl.textContent = p;
+  detEl.style.display = 'block'; detEl.textContent = diff + ' dias de amor ✦';
+  document.getElementById('stat-days').textContent = diff;
+  document.getElementById('stat-months').textContent = Math.floor(diff/30);
+  document.getElementById('story-phrase').style.display = 'block';
+  document.getElementById('story-phrase').textContent = p;
+}
+
+// ── PROPOSAL ─────────────────────────────────────────────
+function checkAnswers() {
+  const c = document.getElementById('ans-c').value;
+  const m = document.getElementById('ans-m').value;
+  STATE.answers = {c, m}; saveState();
+  document.getElementById('ans-c').className = 'answer-select' + (c === 'sim' ? ' yes' : '');
+  document.getElementById('ans-m').className = 'answer-select' + (m === 'sim' ? ' yes' : '');
+  const both = c === 'sim' && m === 'sim';
+  document.getElementById('both-yes').className = 'both-yes-msg' + (both ? ' show' : '');
+  document.getElementById('ring-c').className = 'ring ring-c' + (both ? ' merged' : '');
+  document.getElementById('ring-m').className = 'ring ring-m' + (both ? ' merged' : '');
+  document.getElementById('ring-conn').className = 'ring-connector' + (both ? ' active' : '');
+  document.getElementById('rings-msg').className = 'rings-msg' + (both ? ' show' : '');
+  if (both) setTimeout(openCelebration, 700);
+}
+function restoreAnswers() {
+  const {c, m} = STATE.answers;
+  if (c) { document.getElementById('ans-c').value = c; }
+  if (m) { document.getElementById('ans-m').value = m; }
+  if (c || m) checkAnswers();
+}
+
+// ── CELEBRATION ───────────────────────────────────────────
+function openCelebration() {
+  const cel = document.getElementById('celebration');
+  cel.classList.add('show');
+  // Generate petals
+  const symbols = ['✿','❀','✾','🌸','🌺','✦'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('span');
+    p.className = 'celeb-petal';
+    p.textContent = symbols[i % symbols.length];
+    p.style.cssText = `position:absolute;top:0;left:${Math.random()*100}%;font-size:${14+Math.random()*20}px;animation:petalFall ${3.5+Math.random()*5}s ${Math.random()*3}s linear infinite;pointer-events:none;opacity:.75`;
+    cel.appendChild(p);
+  }
+}
+function closeCelebration() {
+  const cel = document.getElementById('celebration');
+  cel.classList.remove('show');
+  cel.querySelectorAll('.celeb-petal').forEach(p => p.remove());
+}
+
+// ── GOOGLE DRIVE CONFIG ──────────────────────────────────
+// ⬇️ SUBSTITUA pelo seu Client ID do Google Cloud Console
+const GOOGLE_CLIENT_ID = 'SEU_CLIENT_ID_AQUI';
+const DRIVE_SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
+
+let driveToken = null;
+let driveUser = null;
+let pickerSelected = new Set();
+let driveFiles = [];
+
+function isDriveConfigured() {
+  return GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID !== 'SEU_CLIENT_ID_AQUI';
+}
+
+function handleDriveClick() {
+  if (!isDriveConfigured()) {
+    document.getElementById('drive-config-banner').classList.add('show');
+    setTimeout(() => document.getElementById('drive-config-banner').classList.remove('show'), 6000);
+    return;
+  }
+  if (driveToken) {
+    openDrivePicker();
+  } else {
+    driveConnect();
+  }
+}
+
+function driveConnect() {
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: DRIVE_SCOPES,
+    callback: async (resp) => {
+      if (resp.error) { console.error(resp); return; }
+      driveToken = resp.access_token;
+      await loadDriveUser();
+      showDriveBar();
+      openDrivePicker();
+    }
+  });
+  client.requestAccessToken();
+}
+
+async function loadDriveUser() {
+  try {
+    const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: 'Bearer ' + driveToken }
+    });
+    driveUser = await r.json();
+  } catch(e) { driveUser = { name: 'Usuário Drive', email: '' }; }
+}
+
+function showDriveBar() {
+  const bar = document.getElementById('drive-bar');
+  bar.classList.add('show');
+  const name = driveUser?.name || 'Conectado';
+  const email = driveUser?.email || '';
+  document.getElementById('drive-initials').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('drive-user-name').textContent = name;
+  document.getElementById('drive-user-email').textContent = email;
+  const btn = document.getElementById('btn-drive');
+  btn.classList.add('connected');
+  document.getElementById('btn-drive-label').textContent = 'Drive conectado';
+}
+
+function driveDisconnect() {
+  if (driveToken) google.accounts.oauth2.revoke(driveToken);
+  driveToken = null; driveUser = null;
+  document.getElementById('drive-bar').classList.remove('show');
+  const btn = document.getElementById('btn-drive');
+  btn.classList.remove('connected');
+  document.getElementById('btn-drive-label').textContent = 'Google Drive';
+}
+
+async function openDrivePicker() {
+  if (!driveToken) { driveConnect(); return; }
+  document.getElementById('drive-picker-overlay').classList.add('show');
+  document.getElementById('picker-files').innerHTML = '<div class="picker-loading">Carregando suas fotos... ✿</div>';
+  pickerSelected.clear();
+  try {
+    // Fetch image files from Drive
+    const params = new URLSearchParams({
+      q: "mimeType contains 'image/' and trashed=false",
+      fields: 'files(id,name,thumbnailLink,mimeType)',
+      pageSize: '50',
+      orderBy: 'modifiedTime desc'
+    });
+    const r = await fetch(`https://www.googleapis.com/drive/v3/files?${params}`, {
+      headers: { Authorization: 'Bearer ' + driveToken }
+    });
+    const data = await r.json();
+    driveFiles = data.files || [];
+    renderPickerFiles();
+  } catch(e) {
+    document.getElementById('picker-files').innerHTML = '<div class="picker-empty">Erro ao carregar fotos. Tente reconectar.</div>';
+  }
+}
+
+function renderPickerFiles() {
+  const container = document.getElementById('picker-files');
+  if (!driveFiles.length) {
+    container.innerHTML = '<div class="picker-empty">Nenhuma imagem encontrada no Drive ✿</div>';
+    return;
+  }
+  container.innerHTML = '';
+  driveFiles.forEach(file => {
+    const el = document.createElement('div');
+    el.className = 'picker-file' + (pickerSelected.has(file.id) ? ' selected' : '');
+    el.dataset.id = file.id;
+    el.onclick = () => togglePickerFile(file.id, el);
+    const thumb = file.thumbnailLink
+      ? file.thumbnailLink.replace('=s220', '=s200')
+      : '';
+    el.innerHTML = thumb
+      ? `<img src="${thumb}" alt="${file.name}">${pickerSelected.has(file.id) ? '<div style="position:absolute;top:4px;right:4px;background:var(--t);color:white;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px">✓</div>' : ''}<div class="picker-file-name">${file.name}</div>`
+      : `<div style="width:100%;height:100%;background:var(--tp);display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.4">🖼</div><div class="picker-file-name">${file.name}</div>`;
+    container.appendChild(el);
+  });
+}
+
+function togglePickerFile(id, el) {
+  if (pickerSelected.has(id)) {
+    pickerSelected.delete(id);
+    el.classList.remove('selected');
+  } else {
+    pickerSelected.add(id);
+    el.classList.add('selected');
+  }
+  renderPickerFiles();
+}
+
+function closeDrivePicker() {
+  document.getElementById('drive-picker-overlay').classList.remove('show');
+}
+
+async function confirmDriveImport() {
+  if (!pickerSelected.size) { closeDrivePicker(); return; }
+  closeDrivePicker();
+  const toImport = driveFiles.filter(f => pickerSelected.has(f.id));
+  let imported = 0;
+  for (const file of toImport) {
+    try {
+      // Download actual file content via Drive API
+      const r = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
+        headers: { Authorization: 'Bearer ' + driveToken }
+      });
+      const blob = await r.blob();
+      await new Promise(resolve => {
+        compressImg(new File([blob], file.name, {type: blob.type}), 1200, src => {
+          STATE.library.unshift({ id: Date.now() + imported, src, date: '', location: '', description: '', driveId: file.id, driveName: file.name });
+          imported++;
+          resolve();
+        });
+      });
+    } catch(e) { console.error('Erro ao importar', file.name, e); }
+  }
+  renderLibrary();
+  saveState();
+}
+
+// ── LIBRARY ──────────────────────────────────────────────
+function addLibPhotos(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  let processed = 0;
+  files.forEach(file => {
+    compressImg(file, 1200, src => {
+      STATE.library.unshift({ id: Date.now() + processed, src, date: '', location: '', description: '' });
+      processed++;
+      if (processed === files.length) { renderLibrary(); saveState(); }
+    });
+  });
+  input.value = '';
+}
+
+// keep legacy single-file handler alias
+function addLibPhoto(input) { addLibPhotos(input); }
+
+function renderLibrary() {
+  const grid = document.getElementById('photo-grid');
+  const empty = document.getElementById('lib-empty');
+  empty.style.display = STATE.library.length ? 'none' : 'block';
+  grid.innerHTML = '';
+  document.getElementById('stat-photos').textContent = STATE.library.length;
+  STATE.library.forEach((photo, idx) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.innerHTML = `
+      <div class="card-img-wrap">
+        <img class="card-img" src="${photo.src}" alt="memória">
+        <button class="card-delete" onclick="deletePhoto(${idx})">✕</button>
+      </div>
+      <div class="card-body">
+        <div class="card-field">
+          <div class="field-label">Data</div>
+          <input type="date" class="field-input" value="${photo.date||''}" onchange="updatePhoto(${idx},'date',this.value)">
+          ${photo.date ? `<div class="date-friendly">${fmtDate(photo.date)}</div>` : ''}
+        </div>
+        <div class="card-field">
+          <div class="field-label">Local</div>
+          <div class="loc-wrap">
+            <input type="text" class="field-input" placeholder="Buscar local..." value="${escHtml(photo.location||'')}" 
+              oninput="handleLocInput(this,${idx})" onblur="setTimeout(()=>closeSug(${idx}),200)" onfocus="openSugIfAny(${idx})">
+            <div class="loc-suggestions" id="sug-${idx}"></div>
+          </div>
+        </div>
+        <div class="card-field">
+          <div class="field-label">Conte aqui o que essa foto representa mas traga os detalhes</div>
+          <textarea class="field-textarea" placeholder="Esta foto representa..." onchange="updatePhoto(${idx},'description',this.value)">${escHtml(photo.description||'')}</textarea>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  updateStoryTab();
+}
+
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function updatePhoto(idx, field, value) {
+  if (STATE.library[idx]) { STATE.library[idx][field] = value; saveState(); }
+  if (field === 'date') renderLibrary();
+  updateStoryTab();
+}
+
+function deletePhoto(idx) {
+  if (confirm('Remover esta memória?')) { STATE.library.splice(idx, 1); renderLibrary(); saveState(); }
+}
+
+// ── LOCATION SEARCH ──────────────────────────────────────
+let locTimer = null;
+function handleLocInput(input, idx) {
+  const q = input.value;
+  updatePhoto(idx, 'location', q);
+  clearTimeout(locTimer);
+  if (q.length < 3) { closeSug(idx); return; }
+  locTimer = setTimeout(async () => {
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=5&accept-language=pt-BR`);
+      const data = await r.json();
+      const results = [...new Set(data.map(p => p.display_name.split(',').slice(0,3).join(', ').trim()))];
+      const box = document.getElementById('sug-' + idx);
+      box.innerHTML = '';
+      if (!results.length) { closeSug(idx); return; }
+      results.forEach(loc => {
+        const opt = document.createElement('div');
+        opt.className = 'loc-opt';
+        opt.textContent = '📍 ' + loc;
+        opt.onmousedown = () => { input.value = loc; updatePhoto(idx, 'location', loc); closeSug(idx); };
+        box.appendChild(opt);
+      });
+      box.classList.add('open');
+    } catch(e) { closeSug(idx); }
+  }, 480);
+}
+function closeSug(idx) { const b = document.getElementById('sug-'+idx); if(b) b.classList.remove('open'); }
+function openSugIfAny(idx) { const b = document.getElementById('sug-'+idx); if(b && b.children.length) b.classList.add('open'); }
+
+// ── STORY TAB ────────────────────────────────────────────
+function fmtDate(d) {
+  if (!d) return '';
+  return new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
+}
+function updateStoryTab() {
+  document.getElementById('stat-photos').textContent = STATE.library.length;
+  const sorted = [...STATE.library].filter(p => p.date).sort((a,b) => new Date(a.date) - new Date(b.date));
+  const list = document.getElementById('tl-list');
+  if (!sorted.length) {
+    list.innerHTML = '<div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua linha do tempo ✿</div>';
+    return;
+  }
+  list.innerHTML = sorted.slice(0,12).map((p,i) => `
+    <div class="tl-item" style="animation-delay:${i*0.04}s">
+      <div class="tl-left">
+        <div class="tl-dot"></div>
+        ${i < sorted.length-1 ? '<div class="tl-line"></div>' : ''}
+      </div>
+      <div class="tl-content">
+        <div class="tl-date">${fmtDate(p.date)}</div>
+        ${p.location ? `<div class="tl-loc">📍 ${escHtml(p.location)}</div>` : ''}
+        ${p.description ? `<div class="tl-desc">${escHtml(p.description.slice(0,120))}${p.description.length>120?'...':''}</div>` : ''}
+        <div class="tl-thumb"><img src="${p.src}" alt="memória"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── INIT ─────────────────────────────────────────────────
+document.getElementById('auth-input').focus();
+</script>
+<!-- Google Identity Services (carrega assíncrono, não bloqueia) -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>
