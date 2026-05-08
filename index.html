@@ -45,11 +45,14 @@ input,textarea,select{font-family:var(--fb)}
 ═══════════════════════════════ */
 #auth-screen{
   position:fixed;inset:0;
-  background:linear-gradient(160deg,#2C1810 0%,var(--bk) 50%,var(--td) 100%);
   display:flex;align-items:center;justify-content:center;
   z-index:9999;overflow:hidden;
+  background:rgba(44,24,16,0.75);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 #auth-screen.active{display:flex}
+#app-preview{position:fixed;inset:0;z-index:9998;pointer-events:none;overflow:hidden;opacity:0.5}
 .auth-float{position:absolute;opacity:.07;color:var(--tp);pointer-events:none;animation:float 8s ease-in-out infinite;line-height:1}
 .auth-card{
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
@@ -98,8 +101,8 @@ input,textarea,select{font-family:var(--fb)}
 /* ═══════════════════════════════
    APP SHELL
 ═══════════════════════════════ */
-#app{display:none;flex-direction:column;min-height:100vh}
-#app.active{display:flex}
+#app{display:flex;flex-direction:column;min-height:100vh}
+
 .app-header{
   background:linear-gradient(135deg,var(--bk),var(--td));
   padding:14px 22px;display:flex;align-items:center;justify-content:space-between;
@@ -633,7 +636,6 @@ function doAuth() {
   const v = document.getElementById('auth-input').value;
   if (v === PASS) {
     document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
     loadState();
   } else {
     document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
@@ -795,7 +797,16 @@ function restoreAnswers() {
   const {c, m} = STATE.answers;
   if (c) { document.getElementById('ans-c').value = c; }
   if (m) { document.getElementById('ans-m').value = m; }
-  if (c || m) checkAnswers();
+  if (c || m) {
+    document.getElementById('ans-c').className = 'answer-select' + (c === 'sim' ? ' yes' : '');
+    document.getElementById('ans-m').className = 'answer-select' + (m === 'sim' ? ' yes' : '');
+    const both = c === 'sim' && m === 'sim';
+    document.getElementById('both-yes').className = 'both-yes-msg' + (both ? ' show' : '');
+    document.getElementById('ring-c').className = 'ring ring-c' + (both ? ' merged' : '');
+    document.getElementById('ring-m').className = 'ring ring-m' + (both ? ' merged' : '');
+    document.getElementById('ring-conn').className = 'ring-connector' + (both ? ' active' : '');
+    document.getElementById('rings-msg').className = 'rings-msg' + (both ? ' show' : '');
+  }
 }
 
 // ── CELEBRATION ───────────────────────────────────────────
