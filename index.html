@@ -1110,7 +1110,179 @@ function updateStoryTab() {
 // ── INIT ─────────────────────────────────────────────────
 document.getElementById('auth-input').focus();
 </script>
-<!-- Google Identity Services (carrega assíncrono, não bloqueia) -->
+
+<!-- Google Identity Services -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD_RMfE3HZrXjaW0eWx_kPw_v5VDX03OQE",
+  authDomain: "itapua-a9275.firebaseapp.com",
+  projectId: "itapua-a9275",
+  storageBucket: "itapua-a9275.firebasestorage.app",
+  messagingSenderId: "879556626081",
+  appId: "1:879556626081:web:da3851e1b074d0992612e0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ── CLOUDINARY CONFIG ──
+const CLOUDINARY_CLOUD = 'dmoduz1i1';
+const CLOUDINARY_PRESET = 'itapoa';
+
+// ── UPLOAD FOTO PARA CLOUDINARY ──
+async function uploadToCloudinary(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+    method: 'POST', body: formData
+  });
+  const data = await res.json();
+  return data.secure_url;
+}
+
+// ── SAVE CEREMONY TO FIRESTORE ──
+async function saveCeremonyToFirestore(state) {
+  try {
+    await setDoc(doc(db, 'itapoa', 'ceremony'), {
+      acordoC: state.acordoC || '',
+      acordoM: state.acordoM || '',
+      startDate: state.startDate || '',
+      answers: state.answers || {c:'',m:''},
+      photoC: state.photoC || '',
+      photoM: state.photoM || '',
+      updatedAt: new Date().toISOString()
+    });
+  } catch(e) { console.error('Firestore save error:', e); }
+}
+
+// ── LOAD CEREMONY FROM FIRESTORE ──
+async function loadCeremonyFromFirestore() {
+  try {
+    const snap = await getDoc(doc(db, 'itapoa', 'ceremony'));
+    return snap.exists() ? snap.data() : null;
+  } catch(e) { console.error('Firestore load error:', e); return null; }
+}
+
+// ── SAVE LIBRARY PHOTO TO FIRESTORE ──
+async function savePhotoToFirestore(photo) {
+  try {
+    await setDoc(doc(db, 'itapoa_library', photo.id.toString()), photo);
+  } catch(e) { console.error('Firestore photo save error:', e); }
+}
+
+// ── DELETE LIBRARY PHOTO FROM FIRESTORE ──
+async function deletePhotoFromFirestore(id) {
+  try {
+    await deleteDoc(doc(db, 'itapoa_library', id.toString()));
+  } catch(e) { console.error('Firestore delete error:', e); }
+}
+
+// ── LOAD LIBRARY FROM FIRESTORE ──
+async function loadLibraryFromFirestore() {
+  try {
+    const snap = await getDocs(collection(db, 'itapoa_library'));
+    const photos = [];
+    snap.forEach(d => photos.push(d.data()));
+    return photos.sort((a,b) => b.id - a.id);
+  } catch(e) { console.error('Firestore library load error:', e); return []; }
+}
+
+// ── OVERRIDE addLibPhotos TO USE CLOUDINARY ──
+const origInput = document.getElementById('file-lib');
+origInput.addEventListener('change', async function(e) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+
+  // Show loading indicator
+  const grid = document.getElementById('photo-grid');
+  const loader = document.createElement('div');
+  loader.id = 'upload-loader';
+  loader.style.cssText = 'grid-column:1/-1;text-align:center;padding:32px;font-family:var(--fd);font-style:italic;color:var(--t);font-size:18px;opacity:.7';
+  loader.textContent = 'Enviando fotos... ✿';
+  grid.prepend(loader);
+
+  for (const file of files) {
+    try {
+      const url = await uploadToCloudinary(file);
+      const photo = { id: Date.now() + Math.random(), src: url, date: '', location: '', description: '' };
+      STATE.library.unshift(photo);
+      await savePhotoToFirestore(photo);
+    } catch(err) { console.error('Upload error:', err); }
+  }
+
+  const l = document.getElementById('upload-loader');
+  if (l) l.remove();
+  renderLibrary();
+  saveState(); // also keep localStorage backup
+  e.target.value = '';
+}, true);
+
+// ── OVERRIDE deletePhoto TO ALSO DELETE FROM FIRESTORE ──
+window.deletePhotoFirestore = deletePhotoFromFirestore;
+
+// ── LOAD ALL DATA FROM FIRESTORE ON AUTH ──
+window.loadFromFirestore = async function() {
+  // Load ceremony
+  const ceremony = await loadCeremonyFromFirestore();
+  if (ceremony) {
+    if (ceremony.photoC) { STATE.photoC = ceremony.photoC; setPhotoPreview('frame-c','ph-c',ceremony.photoC); setCelebPhoto('celeb-photo-c','celeb-name-c',ceremony.photoC); setTimeout(()=>setStoryPhoto('story-photo-c',ceremony.photoC),50); }
+    if (ceremony.photoM) { STATE.photoM = ceremony.photoM; setPhotoPreview('frame-m','ph-m',ceremony.photoM); setCelebPhoto('celeb-photo-m','celeb-name-m',ceremony.photoM); setTimeout(()=>setStoryPhoto('story-photo-m',ceremony.photoM),50); }
+    if (ceremony.acordoC) { STATE.acordoC = ceremony.acordoC; document.getElementById('acordo-c').value = ceremony.acordoC; }
+    if (ceremony.acordoM) { STATE.acordoM = ceremony.acordoM; document.getElementById('acordo-m').value = ceremony.acordoM; }
+    if (ceremony.startDate) { STATE.startDate = ceremony.startDate; document.getElementById('start-date').value = ceremony.startDate; calcTogether(); }
+    if (ceremony.answers) { STATE.answers = ceremony.answers; restoreAnswers(); }
+  }
+  // Load library
+  const photos = await loadLibraryFromFirestore();
+  if (photos.length > 0) {
+    STATE.library = photos;
+    renderLibrary();
+  }
+};
+
+// ── AUTO-SAVE CEREMONY ON CHANGE ──
+const origSaveState = window.saveState;
+window.saveState = function() {
+  origSaveState && origSaveState();
+  saveCeremonyToFirestore(STATE);
+};
+
+// ── OVERRIDE deletePhoto TO SYNC FIRESTORE ──
+const origDeletePhoto = window.deletePhoto;
+window.deletePhoto = function(idx) {
+  if (confirm('Remover esta memória?')) {
+    const photo = STATE.library[idx];
+    if (photo) deletePhotoFromFirestore(photo.id);
+    STATE.library.splice(idx, 1);
+    renderLibrary();
+    saveState();
+  }
+};
+
+// ── OVERRIDE doAuth TO LOAD FROM FIRESTORE ──
+const origDoAuth = window.doAuth;
+window.doAuth = async function() {
+  const v = document.getElementById('auth-input').value;
+  if (v === '161124') {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    loadState(); // localStorage first for speed
+    await loadFromFirestore(); // then sync from cloud
+  } else {
+    document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
+    const card = document.getElementById('auth-card');
+    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+    document.getElementById('auth-input').value = '';
+    setTimeout(()=>{ document.getElementById('auth-err').textContent=''; card.classList.remove('shake'); }, 2200);
+  }
+};
+</script>
 </body>
 </html>
