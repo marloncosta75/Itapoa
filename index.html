@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#C1714A">
-<title>Itapoã ✦ Camila & Marlon</title>
+<title>Itapuã ✦ Camila & Marlon</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & TOKENS ── */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --t:#C1714A;--tl:#E8956D;--tp:#F5E6DC;--td:#8B4A2F;
-  --cr:#FAF6F1;--ww:#FFFDF9;--bk:#5C3D2E;--pe:#F2C9B8;
-  --go:#D4A556;--lf:#7A8C5E;
+  --t:#C4856A;--tl:#DEAD98;--tp:#F7EDE6;--td:#7A4A38;
+  --cr:#FAF7F4;--ww:#FFFCFA;--bk:#3D2B22;--pe:#F2D5C4;
+  --go:#E8B89A;--lf:#A89080;
   --fd:'Cormorant Garamond',Georgia,serif;
   --fb:'Jost',system-ui,sans-serif;
 }
 html,body{height:100%;font-family:var(--fb);background:var(--cr);color:var(--bk)}
 ::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--tp)}
+::-webkit-scrollbar-track{background:var(--pe)}
 ::-webkit-scrollbar-thumb{background:var(--t);border-radius:2px}
 button{font-family:var(--fb);cursor:pointer}
 input,textarea,select{font-family:var(--fb)}
@@ -53,9 +53,9 @@ input,textarea,select{font-family:var(--fb)}
 }
 #auth-screen.active{display:flex}
 #app-preview{position:fixed;inset:0;z-index:9998;pointer-events:none;overflow:hidden;opacity:0.5}
-.auth-float{position:absolute;opacity:.07;color:var(--tp);pointer-events:none;animation:float 8s ease-in-out infinite;line-height:1}
+.auth-float{position:absolute;opacity:.07;color:var(--pe);pointer-events:none;animation:float 8s ease-in-out infinite;line-height:1}
 .auth-card{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,248,244,.08);border:1px solid rgba(232,184,154,.2);
   border-radius:28px;padding:48px 44px 40px;text-align:center;
   width:min(380px,92vw);animation:fadeUp .6s ease both;
 }
@@ -64,11 +64,11 @@ input,textarea,select{font-family:var(--fb)}
 .auth-title{font-family:var(--fd);font-size:56px;font-weight:300;font-style:italic;color:var(--cr);letter-spacing:3px;line-height:1;margin-bottom:6px}
 .auth-sub{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:rgba(250,246,241,.4);margin-bottom:36px}
 .auth-input{
-  width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  width:100%;background:rgba(255,248,244,.12);border:1px solid rgba(232,184,154,.25);
   border-radius:14px;padding:15px 20px;font-size:24px;color:var(--cr);text-align:center;
   letter-spacing:10px;outline:none;transition:.3s;margin-bottom:12px;
 }
-.auth-input:focus{border-color:rgba(193,113,74,.8);background:rgba(255,255,255,.16)}
+.auth-input:focus{border-color:rgba(196,133,106,.85);background:rgba(255,248,244,.2)}
 .auth-btn{
   width:100%;background:var(--t);border:none;border-radius:14px;padding:15px;
   font-size:12px;letter-spacing:4px;text-transform:uppercase;color:white;transition:.25s;
@@ -82,7 +82,7 @@ input,textarea,select{font-family:var(--fb)}
 ═══════════════════════════════ */
 #celebration{
   display:none;position:fixed;inset:0;z-index:9990;
-  background:rgba(92,38,18,.92);align-items:center;justify-content:center;overflow:hidden;
+  background:linear-gradient(160deg,rgba(42,20,10,.94),rgba(90,42,28,.9));align-items:center;justify-content:center;overflow:hidden;
 }
 #celebration.show{display:flex;animation:fadeUp .4s ease}
 .celeb-petal{position:absolute;top:0;pointer-events:none;opacity:.75;animation:petalFall linear infinite}
@@ -104,14 +104,14 @@ input,textarea,select{font-family:var(--fb)}
 #app{display:flex;flex-direction:column;min-height:100vh}
 
 .app-header{
-  background:linear-gradient(135deg,var(--bk),var(--td));
+  background:linear-gradient(135deg,#3D2B22,#7A4A38);
   padding:14px 22px;display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15);
 }
 .app-logo{font-family:var(--fd);font-size:28px;font-weight:300;font-style:italic;color:var(--cr);letter-spacing:3px;line-height:1}
 .app-tagline{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,246,241,.36);margin-top:2px}
 .app-header-flowers{font-size:16px;letter-spacing:6px;opacity:.25;color:var(--tl)}
-.tab-bar{display:flex;background:var(--bk);padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none}
+.tab-bar{display:flex;background:#3D2B22;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none}
 .tab-bar::-webkit-scrollbar{display:none}
 .tab-btn{flex-shrink:0;padding:12px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,241,.4);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:.25s;white-space:nowrap}
 .tab-btn:hover{color:rgba(250,246,241,.7)}
@@ -122,7 +122,7 @@ input,textarea,select{font-family:var(--fb)}
 /* ═══════════════════════════════
    TAB 1: CERIMÔNIA
 ═══════════════════════════════ */
-.cer-bg{background:linear-gradient(180deg,var(--tp) 0%,var(--ww) 40%,var(--cr) 100%);min-height:calc(100vh - 110px);padding-bottom:48px}
+.cer-bg{background:linear-gradient(180deg,#F7EDE6 0%,#FFFCFA 40%,#FAF7F4 100%);min-height:calc(100vh - 110px);padding-bottom:48px}
 .page-header{text-align:center;padding:32px 20px 0}
 .page-floret{font-size:16px;letter-spacing:10px;color:var(--t);opacity:.4;margin-bottom:10px}
 .page-title{font-family:var(--fd);font-size:clamp(26px,5vw,38px);font-style:italic;color:var(--td);margin-bottom:8px}
@@ -181,7 +181,7 @@ input,textarea,select{font-family:var(--fb)}
 .rings-msg{margin-top:12px;font-family:var(--fd);font-size:15px;font-style:italic;color:var(--td);animation:fadeUp .5s ease;display:none}
 .rings-msg.show{display:block}
 
-.question-card{background:linear-gradient(135deg,var(--tp),var(--pe));border:1px solid rgba(242,201,184,.6);border-radius:22px;padding:24px 20px;max-width:500px;margin:0 auto;text-align:center}
+.question-card{background:linear-gradient(135deg,#F7EDE6,#F2D5C4);border:1px solid rgba(242,201,184,.6);border-radius:22px;padding:24px 20px;max-width:500px;margin:0 auto;text-align:center}
 .question-floret{font-size:14px;letter-spacing:8px;color:var(--t);opacity:.5;margin-bottom:10px}
 .question-text{font-family:var(--fd);font-size:clamp(20px,4vw,28px);font-style:italic;color:var(--td);margin-bottom:18px}
 .answers-row{display:flex;gap:16px;justify-content:center;align-items:flex-end;flex-wrap:wrap}
@@ -268,7 +268,7 @@ input,textarea,select{font-family:var(--fb)}
 /* ═══════════════════════════════
    TAB 3: NOSSA HISTÓRIA
 ═══════════════════════════════ */
-.story-bg{background:linear-gradient(180deg,#2C1810 0%,var(--bk) 30%,var(--td) 70%,var(--t) 100%);min-height:calc(100vh - 110px);padding-bottom:48px;color:var(--cr)}
+.story-bg{background:linear-gradient(180deg,#1E110A 0%,#3D2B22 30%,#7A4A38 70%,#C4856A 100%);min-height:calc(100vh - 110px);padding-bottom:48px;color:var(--cr)}
 .story-hero{text-align:center;padding:36px 20px 24px}
 .story-floret{font-size:18px;letter-spacing:10px;opacity:.32;margin-bottom:12px}
 .story-title{font-family:var(--fd);font-size:clamp(38px,7vw,54px);font-weight:300;font-style:italic;margin-bottom:5px}
@@ -318,7 +318,7 @@ input,textarea,select{font-family:var(--fb)}
   <span class="auth-float" style="top:5%;left:44%;font-size:44px;animation-delay:3s">❀</span>
   <div class="auth-card" id="auth-card">
     <div class="auth-flowers">✿ ❀ ✾</div>
-    <div class="auth-title">Itapoã</div>
+    <div class="auth-title">Itapuã</div>
     <div class="auth-sub">Camila & Marlon</div>
     <input class="auth-input" id="auth-input" type="password" placeholder="••••••" maxlength="6" autocomplete="current-password">
     <button class="auth-btn" onclick="doAuth()">Entrar ✦</button>
@@ -356,7 +356,7 @@ input,textarea,select{font-family:var(--fb)}
 <div id="app">
   <div class="app-header">
     <div>
-      <div class="app-logo">Itapoã</div>
+      <div class="app-logo">Itapuã</div>
       <div class="app-tagline">Uma história de amor ✦</div>
     </div>
     <div class="app-header-flowers">✿ ❀ ✾</div>
@@ -615,11 +615,11 @@ const PASS = '161124'; // v2.1
 
 // ── PERSIST ──────────────────────────────────────────────
 function saveState() {
-  try { localStorage.setItem('itapoa', JSON.stringify(STATE)); } catch(e) {}
+  try { localStorage.setItem('itapua', JSON.stringify(STATE)); } catch(e) {}
 }
 function loadState() {
   try {
-    const s = JSON.parse(localStorage.getItem('itapoa') || '{}');
+    const s = JSON.parse(localStorage.getItem('itapua') || '{}');
     if (s.photoC) { STATE.photoC = s.photoC; setPhotoPreview('frame-c','ph-c',s.photoC); setCelebPhoto('celeb-photo-c','celeb-name-c',s.photoC); setTimeout(()=>setStoryPhoto('story-photo-c',s.photoC),50); }
     if (s.photoM) { STATE.photoM = s.photoM; setPhotoPreview('frame-m','ph-m',s.photoM); setCelebPhoto('celeb-photo-m','celeb-name-m',s.photoM); setTimeout(()=>setStoryPhoto('story-photo-m',s.photoM),50); }
     if (s.acordoC) { STATE.acordoC = s.acordoC; document.getElementById('acordo-c').value = s.acordoC; }
@@ -1144,7 +1144,7 @@ const db = getFirestore(app);
 
 // ── CLOUDINARY CONFIG ──
 const CLOUDINARY_CLOUD = 'dmoduz1i1';
-const CLOUDINARY_PRESET = 'itapoa';
+const CLOUDINARY_PRESET = 'itapua';
 
 // ── UPLOAD FOTO PARA CLOUDINARY ──
 async function uploadToCloudinary(file) {
@@ -1161,7 +1161,7 @@ async function uploadToCloudinary(file) {
 // ── SAVE CEREMONY TO FIRESTORE ──
 async function saveCeremonyToFirestore(state) {
   try {
-    await setDoc(doc(db, 'itapoa', 'ceremony'), {
+    await setDoc(doc(db, 'itapua', 'ceremony'), {
       acordoC: state.acordoC || '',
       acordoM: state.acordoM || '',
       startDate: state.startDate || '',
@@ -1176,7 +1176,7 @@ async function saveCeremonyToFirestore(state) {
 // ── LOAD CEREMONY FROM FIRESTORE ──
 async function loadCeremonyFromFirestore() {
   try {
-    const snap = await getDoc(doc(db, 'itapoa', 'ceremony'));
+    const snap = await getDoc(doc(db, 'itapua', 'ceremony'));
     return snap.exists() ? snap.data() : null;
   } catch(e) { console.error('Firestore load error:', e); return null; }
 }
@@ -1184,21 +1184,21 @@ async function loadCeremonyFromFirestore() {
 // ── SAVE LIBRARY PHOTO TO FIRESTORE ──
 async function savePhotoToFirestore(photo) {
   try {
-    await setDoc(doc(db, 'itapoa_library', photo.id.toString()), photo);
+    await setDoc(doc(db, 'itapua_library', photo.id.toString()), photo);
   } catch(e) { console.error('Firestore photo save error:', e); }
 }
 
 // ── DELETE LIBRARY PHOTO FROM FIRESTORE ──
 async function deletePhotoFromFirestore(id) {
   try {
-    await deleteDoc(doc(db, 'itapoa_library', id.toString()));
+    await deleteDoc(doc(db, 'itapua_library', id.toString()));
   } catch(e) { console.error('Firestore delete error:', e); }
 }
 
 // ── LOAD LIBRARY FROM FIRESTORE ──
 async function loadLibraryFromFirestore() {
   try {
-    const snap = await getDocs(collection(db, 'itapoa_library'));
+    const snap = await getDocs(collection(db, 'itapua_library'));
     const photos = [];
     snap.forEach(d => photos.push(d.data()));
     return photos.sort((a,b) => b.id - a.id);
