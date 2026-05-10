@@ -808,6 +808,15 @@ input,textarea,select{font-family:var(--fb)}
             </div>
           </div>
           <div id="viewer-text" style="font-family:'Lora',serif;font-size:16px;font-style:italic;color:var(--bk);line-height:1.8;padding:16px;background:var(--tp);border-radius:14px;border-left:3px solid var(--go)"></div>
+          <!-- B5 delete button -->
+          <div style="margin-top:16px;display:flex;align-items:center;justify-content:flex-end;border-top:1px solid var(--pe);padding-top:12px">
+            <button id="viewer-delete-btn" onclick="deleteCurrentPost()" style="display:flex;align-items:center;gap:6px;background:transparent;border:none;font-family:'Lora',serif;font-style:italic;font-size:13px;color:rgba(122,56,32,.35);cursor:pointer;transition:color .25s;padding:4px 8px;border-radius:8px"
+              onmouseover="this.style.color='rgba(184,92,56,.7)';this.style.background='rgba(184,92,56,.06)'"
+              onmouseout="this.style.color='rgba(122,56,32,.35)';this.style.background='transparent'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              deixar ir...
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1447,7 +1456,10 @@ function renderPosts() {
   });
 }
 
+let currentViewerPostIdx = -1;
+
 function openPostViewer(post) {
+  currentViewerPostIdx = STATE.posts ? STATE.posts.findIndex(p => p.id === post.id) : -1;
   const photoSrc = post.author === 'c' ? STATE.photoC : STATE.photoM;
   const avatarEl = document.getElementById('viewer-avatar');
   if (photoSrc) {
@@ -1467,6 +1479,19 @@ function openPostViewer(post) {
 
 function closePostViewer() {
   document.getElementById('post-viewer').style.display = 'none';
+  currentViewerPostIdx = -1;
+}
+
+function deleteCurrentPost() {
+  if (currentViewerPostIdx < 0) return;
+  if (confirm('Deixar ir este post?')) {
+    const post = STATE.posts[currentViewerPostIdx];
+    if (post && window._deletePostFn) window._deletePostFn(post.id);
+    STATE.posts.splice(currentViewerPostIdx, 1);
+    saveState();
+    renderPosts();
+    closePostViewer();
+  }
 }
 
 function deletePost(idx) {
