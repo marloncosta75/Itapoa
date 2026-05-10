@@ -1271,9 +1271,10 @@ function fmtDate(d) {
   return new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
 }
 function updateStoryTab() {
-  document.getElementById('stat-photos').textContent = STATE.library.length;
+  const statEl = document.getElementById('stat-photos');
+  if (statEl) statEl.textContent = STATE.library.length;
   const sorted = [...STATE.library].filter(p => p.date).sort((a,b) => new Date(a.date) - new Date(b.date));
-  const list = document.getElementById('tl-list');
+  const list = document.getElementById('love-stories-list'); if (!list) return;
   if (!sorted.length) {
     list.innerHTML = '<div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua love stories ✿</div>';
     return;
