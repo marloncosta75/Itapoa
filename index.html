@@ -1271,27 +1271,9 @@ function fmtDate(d) {
   return new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'});
 }
 function updateStoryTab() {
+  // Only update stats counter - does NOT touch love-stories-list (that belongs to renderPosts)
   const statEl = document.getElementById('stat-photos');
   if (statEl) statEl.textContent = STATE.library.length;
-  const sorted = [...STATE.library].filter(p => p.date).sort((a,b) => new Date(a.date) - new Date(b.date));
-  const list = document.getElementById('love-stories-list'); if (!list) return;
-  if (!sorted.length) {
-    list.innerHTML = '<div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua love stories ✿</div>';
-    return;
-  }
-  list.innerHTML = sorted.slice(0,12).map((p,i) => `
-    <div class="tl-item" style="animation-delay:${i*0.04}s">
-      <div class="tl-left">
-        <div class="tl-dot"></div>
-        ${i < sorted.length-1 ? '<div class="tl-line"></div>' : ''}
-      </div>
-      <div class="tl-content">
-        <div class="tl-date">${fmtDate(p.date)}</div>
-        ${p.location ? `<div class="tl-loc">📍 ${escHtml(p.location)}</div>` : ''}
-        ${p.description ? `<div class="tl-desc">${escHtml(p.description.slice(0,120))}${p.description.length>120?'...':''}</div>` : ''}
-        <div class="tl-thumb"><img src="${p.src}" alt="memória"></div>
-      </div>
-    </div>`).join('');
 }
 
 // ── POSTS (Love Stories) ─────────────────────────────────
