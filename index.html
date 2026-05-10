@@ -806,6 +806,26 @@ function doAuth() {
   if (v === PASS) {
     document.getElementById('auth-screen').style.display = 'none';
     loadState();
+    // Se Firebase já carregou, chama direto. Senão, registra na fila
+    if (window._firebaseReady && window.loadFromFirestore) {
+      const indicator = document.createElement('div');
+      indicator.id = 'firebase-loading';
+      indicator.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--t);color:white;padding:8px 20px;border-radius:20px;font-family:var(--fd);font-size:13px;font-style:italic;z-index:9000;animation:fadeUp .3s ease';
+      indicator.textContent = 'Carregando seus dados... ✿';
+      document.body.appendChild(indicator);
+      window.loadFromFirestore().then(() => { const el = document.getElementById('firebase-loading'); if(el) el.remove(); });
+    } else {
+      window._pendingFirebaseLoad = function() {
+        if (window.loadFromFirestore) {
+          const indicator = document.createElement('div');
+          indicator.id = 'firebase-loading';
+          indicator.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--t);color:white;padding:8px 20px;border-radius:20px;font-family:var(--fd);font-size:13px;font-style:italic;z-index:9000;animation:fadeUp .3s ease';
+          indicator.textContent = 'Carregando seus dados... ✿';
+          document.body.appendChild(indicator);
+          window.loadFromFirestore().then(() => { const el = document.getElementById('firebase-loading'); if(el) el.remove(); });
+        }
+      };
+    }
   } else {
     document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
     const card = document.getElementById('auth-card');
@@ -1626,14 +1646,27 @@ window.deletePhoto = function(idx) {
 };
 
 // ── OVERRIDE doAuth TO LOAD FROM FIRESTORE ──
-const origDoAuth = window.doAuth;
+// Registra que o Firebase está pronto e executa fila pendente
+window._firebaseReady = true;
+if (window._pendingFirebaseLoad) {
+  window._pendingFirebaseLoad();
+  window._pendingFirebaseLoad = null;
+}
+
 window.doAuth = async function() {
   const v = document.getElementById('auth-input').value;
   if (v === '161124') {
     document.getElementById('auth-screen').style.display = 'none';
     document.getElementById('app').style.display = 'flex';
-    loadState(); // localStorage first for speed
-    await loadFromFirestore(); // then sync from cloud
+    loadState(); // localStorage primeiro para velocidade
+    // Mostra indicador de carregamento
+    const indicator = document.createElement('div');
+    indicator.id = 'firebase-loading';
+    indicator.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--t);color:white;padding:8px 20px;border-radius:20px;font-family:var(--fd);font-size:13px;font-style:italic;z-index:9000;animation:fadeUp .3s ease';
+    indicator.textContent = 'Carregando seus dados... ✿';
+    document.body.appendChild(indicator);
+    await loadFromFirestore();
+    indicator.remove();
   } else {
     document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
     const card = document.getElementById('auth-card');
