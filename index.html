@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#C4856A">
+<meta name="theme-color" content="#B85C38">
 <title>Itapuã ✦ Camila & Marlon</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & TOKENS ── */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --t:#C4856A;--tl:#DEAD98;--tp:#F7EDE6;--td:#7A4A38;
-  --cr:#FAF7F4;--ww:#FFFCFA;--bk:#3D2B22;--pe:#F2D5C4;
-  --go:#E8B89A;--lf:#A89080;
-  --fd:'Cormorant Garamond',Georgia,serif;
+  --t:#B85C38;--tl:#D4884A;--tp:#FAF0E6;--td:#7A3820;
+  --cr:#FBF7F2;--ww:#FFFDF9;--bk:#2C1A0E;--pe:#EDD4B8;
+  --go:#D4A24C;--lf:#8C6A3A;
+  --fd:'Lora',Georgia,serif;
   --fb:'Jost',system-ui,sans-serif;
 }
 html,body{height:100%;font-family:var(--fb);background:var(--cr);color:var(--bk)}
@@ -82,7 +82,7 @@ input,textarea,select{font-family:var(--fb)}
 ═══════════════════════════════ */
 #celebration{
   display:none;position:fixed;inset:0;z-index:9990;
-  background:linear-gradient(160deg,rgba(42,20,10,.94),rgba(90,42,28,.9));align-items:center;justify-content:center;overflow:hidden;
+  background:linear-gradient(160deg,rgba(30,14,6,.95),rgba(74,38,16,.92));align-items:center;justify-content:center;overflow:hidden;
 }
 #celebration.show{display:flex;animation:fadeUp .4s ease}
 .celeb-petal{position:absolute;top:0;pointer-events:none;opacity:.75;animation:petalFall linear infinite}
@@ -104,14 +104,14 @@ input,textarea,select{font-family:var(--fb)}
 #app{display:flex;flex-direction:column;min-height:100vh}
 
 .app-header{
-  background:linear-gradient(135deg,#3D2B22,#7A4A38);
+  background:linear-gradient(135deg,#2C1A0E,#7A3820);
   padding:14px 22px;display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15);
 }
 .app-logo{font-family:var(--fd);font-size:28px;font-weight:300;font-style:italic;color:var(--cr);letter-spacing:3px;line-height:1}
 .app-tagline{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,246,241,.36);margin-top:2px}
 .app-header-flowers{font-size:16px;letter-spacing:6px;opacity:.25;color:var(--tl)}
-.tab-bar{display:flex;background:#3D2B22;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none}
+.tab-bar{display:flex;background:#2C1A0E;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none}
 .tab-bar::-webkit-scrollbar{display:none}
 .tab-btn{flex-shrink:0;padding:12px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(250,246,241,.4);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:.25s;white-space:nowrap}
 .tab-btn:hover{color:rgba(250,246,241,.7)}
@@ -122,7 +122,7 @@ input,textarea,select{font-family:var(--fb)}
 /* ═══════════════════════════════
    TAB 1: CERIMÔNIA
 ═══════════════════════════════ */
-.cer-bg{background:linear-gradient(180deg,#F7EDE6 0%,#FFFCFA 40%,#FAF7F4 100%);min-height:calc(100vh - 110px);padding-bottom:48px}
+.cer-bg{background:linear-gradient(180deg,#FAF0E6 0%,#FFFDF9 40%,#FBF7F2 100%);min-height:calc(100vh - 110px);padding-bottom:48px}
 .page-header{text-align:center;padding:32px 20px 0}
 .page-floret{font-size:16px;letter-spacing:10px;color:var(--t);opacity:.4;margin-bottom:10px}
 .page-title{font-family:var(--fd);font-size:clamp(26px,5vw,38px);font-style:italic;color:var(--td);margin-bottom:8px}
@@ -141,7 +141,7 @@ input,textarea,select{font-family:var(--fb)}
 .photo-placeholder{text-align:center;color:var(--t);opacity:.6}
 .photo-placeholder .icon{font-size:38px;margin-bottom:8px}
 .photo-placeholder .hint{font-size:11px;letter-spacing:1px}
-.photo-overlay{position:absolute;inset:0;background:rgba(139,74,47,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;color:white;font-size:12px;letter-spacing:2px}
+.photo-overlay{position:absolute;inset:0;background:rgba(90,46,14,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;color:white;font-size:12px;letter-spacing:2px}
 .photo-name{font-family:var(--fd);font-size:19px;font-style:italic;color:var(--td)}
 .photo-sep{font-size:20px;color:var(--t);opacity:.35;align-self:center;padding-top:36px}
 
@@ -181,7 +181,7 @@ input,textarea,select{font-family:var(--fb)}
 .rings-msg{margin-top:12px;font-family:var(--fd);font-size:15px;font-style:italic;color:var(--td);animation:fadeUp .5s ease;display:none}
 .rings-msg.show{display:block}
 
-.question-card{background:linear-gradient(135deg,#F7EDE6,#F2D5C4);border:1px solid rgba(242,201,184,.6);border-radius:22px;padding:24px 20px;max-width:500px;margin:0 auto;text-align:center}
+.question-card{background:linear-gradient(135deg,#FAF0E6,#EDD4B8);border:1px solid rgba(242,201,184,.6);border-radius:22px;padding:24px 20px;max-width:500px;margin:0 auto;text-align:center}
 .question-floret{font-size:14px;letter-spacing:8px;color:var(--t);opacity:.5;margin-bottom:10px}
 .question-text{font-family:var(--fd);font-size:clamp(20px,4vw,28px);font-style:italic;color:var(--td);margin-bottom:18px}
 .answers-row{display:flex;gap:16px;justify-content:center;align-items:flex-end;flex-wrap:wrap}
@@ -268,7 +268,7 @@ input,textarea,select{font-family:var(--fb)}
 /* ═══════════════════════════════
    TAB 3: NOSSA HISTÓRIA
 ═══════════════════════════════ */
-.story-bg{background:linear-gradient(180deg,#1E110A 0%,#3D2B22 30%,#7A4A38 70%,#C4856A 100%);min-height:calc(100vh - 110px);padding-bottom:48px;color:var(--cr)}
+.story-bg{background:linear-gradient(180deg,#130800 0%,#2C1A0E 30%,#7A3820 70%,#B85C38 100%);min-height:calc(100vh - 110px);padding-bottom:48px;color:var(--cr)}
 .story-hero{text-align:center;padding:36px 20px 24px}
 .story-floret{font-size:18px;letter-spacing:10px;opacity:.32;margin-bottom:12px}
 .story-title{font-family:var(--fd);font-size:clamp(38px,7vw,54px);font-weight:300;font-style:italic;margin-bottom:5px}
@@ -282,7 +282,7 @@ input,textarea,select{font-family:var(--fb)}
 .story-photo-placeholder .sp-icon{font-size:32px}
 .story-photo-placeholder .sp-name{font-family:var(--fd);font-size:15px;font-style:italic}
 .story-photo-placeholder .sp-hint{font-size:10px;letter-spacing:1px;opacity:.7}
-.story-photo-overlay{position:absolute;inset:0;background:rgba(139,74,47,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;color:white;font-size:11px;letter-spacing:2px}
+.story-photo-overlay{position:absolute;inset:0;background:rgba(90,46,14,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s;color:white;font-size:11px;letter-spacing:2px}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 20px;max-width:480px;margin:0 auto 14px}
 .stat-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 10px;text-align:center}
 .stat-num{font-family:var(--fd);font-size:clamp(26px,5vw,36px);font-weight:300;font-style:italic;color:var(--tl)}
@@ -303,6 +303,34 @@ input,textarea,select{font-family:var(--fb)}
 .tl-desc{font-size:12px;color:rgba(250,246,241,.52);line-height:1.6;margin-bottom:7px}
 .tl-thumb{width:100%;max-width:240px;height:120px;border-radius:11px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
 .tl-thumb img{width:100%;height:100%;object-fit:cover}
+
+/* ── POSTS STORIES ── */
+.posts-stories-row{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.posts-stories-row::-webkit-scrollbar{display:none}
+.story-bubble{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;cursor:pointer}
+.story-ring{width:58px;height:58px;border-radius:50%;border:2.5px solid var(--go);padding:3px}
+.story-ring-new{border-style:dashed;border-color:rgba(250,247,244,.35)}
+.story-avatar{width:100%;height:100%;border-radius:50%;background:var(--tp);display:flex;align-items:center;justify-content:center;font-family:'Lora',serif;font-size:11px;font-style:italic;color:var(--td);overflow:hidden}
+.story-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.story-avatar-new{background:rgba(255,255,255,.1);color:rgba(250,247,244,.5);font-size:22px;font-style:normal}
+.story-bubble-name{font-size:9px;color:rgba(250,247,244,.55);letter-spacing:.5px;max-width:58px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ls-card{display:flex;gap:12px;margin-bottom:18px;animation:fadeUp .4s ease both}
+.ls-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:12px}
+.ls-dot{width:10px;height:10px;border-radius:50%;background:var(--tl);box-shadow:0 0 0 3px rgba(212,162,76,.2);flex-shrink:0;margin-top:5px}
+.ls-line{width:2px;flex:1;background:rgba(212,162,76,.15);margin:5px 0;min-height:18px}
+.ls-content{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 14px;cursor:pointer;transition:.2s}
+.ls-content:hover{background:rgba(255,255,255,.1)}
+.ls-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ls-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--go);overflow:hidden;background:var(--tp);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--td);flex-shrink:0}
+.ls-avatar img{width:100%;height:100%;object-fit:cover}
+.ls-author{font-family:'Lora',serif;font-size:13px;font-style:italic;color:rgba(250,247,244,.85)}
+.ls-date{font-size:10px;color:rgba(250,247,244,.38);margin-left:auto}
+.ls-text{font-family:'Lora',serif;font-size:13px;font-style:italic;color:rgba(250,247,244,.7);line-height:1.7}
+.ls-delete{background:none;border:none;color:rgba(250,247,244,.22);font-size:11px;cursor:pointer;margin-top:8px;display:block;letter-spacing:1px;transition:.2s}
+.ls-delete:hover{color:rgba(250,247,244,.55)}
+/* Video in library */
+.card-video{width:100%;height:200px;object-fit:cover;display:block;background:#000}
+.video-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.6);color:white;font-size:10px;padding:3px 8px;border-radius:6px;letter-spacing:1px}
 
 /* ═══════════════════════════════
    MOBILE RESPONSIVE
@@ -575,8 +603,8 @@ input,textarea,select{font-family:var(--fb)}
             </svg>
             <span id="btn-drive-label">Google Drive</span>
           </button>
-          <button class="btn-add" onclick="document.getElementById('file-lib').click()">✿ Adicionar Foto</button>
-          <input type="file" id="file-lib" accept="image/*" multiple style="display:none" onchange="addLibPhotos(this)">
+          <button class="btn-add" onclick="document.getElementById('file-lib').click()">✿ Adicionar Foto ou Vídeo</button>
+          <input type="file" id="file-lib" accept="image/*,video/*" multiple style="display:none" onchange="addLibPhotos(this)">
         </div>
       </div>
 
@@ -627,47 +655,116 @@ input,textarea,select{font-family:var(--fb)}
   <!-- TAB 3: NOSSA HISTÓRIA -->
   <div id="tab-story" class="tab-content">
     <div class="story-bg">
+
+      <!-- HERO: fotos + nomes + aliança -->
       <div class="story-hero">
         <div class="story-floret">✿ ❀ ✾</div>
         <div class="story-title">Nossa História</div>
         <p class="story-sub">Camila & Marlon ✦ Para Sempre</p>
         <div class="story-pair" id="story-pair">
-          <div class="story-photo" id="story-photo-c" onclick="document.getElementById('file-story-c').click()">
-            <div class="story-photo-placeholder" id="sph-c">
-              <div class="sp-icon">✿</div>
-              <div class="sp-name">Camila</div>
-              <div class="sp-hint">Clique para adicionar</div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div class="story-photo" id="story-photo-c" onclick="document.getElementById('file-story-c').click()">
+              <div class="story-photo-placeholder" id="sph-c">
+                <div class="sp-icon">✿</div>
+                <div class="sp-name">Camila</div>
+                <div class="sp-hint">Toque para adicionar</div>
+              </div>
+              <div class="story-photo-overlay">✦ Alterar</div>
             </div>
-            <div class="story-photo-overlay">✦ Alterar</div>
+            <div style="font-family:'Lora',serif;font-size:13px;font-style:italic;color:rgba(250,247,244,.7)">Camila</div>
           </div>
           <input type="file" id="file-story-c" accept="image/*" style="display:none" onchange="loadStoryPhoto(this,'story-photo-c','sph-c','celeb-photo-c','celeb-name-c','photoC')">
 
-          <div style="font-size:28px;animation:heartbeat 1.4s ease-in-out infinite">💍</div>
+          <div style="font-size:26px;animation:heartbeat 1.4s ease-in-out infinite;margin-top:-12px">💍</div>
 
-          <div class="story-photo" id="story-photo-m" onclick="document.getElementById('file-story-m').click()">
-            <div class="story-photo-placeholder" id="sph-m">
-              <div class="sp-icon">❀</div>
-              <div class="sp-name">Marlon</div>
-              <div class="sp-hint">Clique para adicionar</div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div class="story-photo" id="story-photo-m" onclick="document.getElementById('file-story-m').click()">
+              <div class="story-photo-placeholder" id="sph-m">
+                <div class="sp-icon">❀</div>
+                <div class="sp-name">Marlon</div>
+                <div class="sp-hint">Toque para adicionar</div>
+              </div>
+              <div class="story-photo-overlay">✦ Alterar</div>
             </div>
-            <div class="story-photo-overlay">✦ Alterar</div>
+            <div style="font-family:'Lora',serif;font-size:13px;font-style:italic;color:rgba(250,247,244,.7)">Marlon</div>
           </div>
           <input type="file" id="file-story-m" accept="image/*" style="display:none" onchange="loadStoryPhoto(this,'story-photo-m','sph-m','celeb-photo-m','celeb-name-m','photoM')">
         </div>
       </div>
+
+      <!-- STATS -->
       <div class="stats-grid">
         <div class="stat-box"><div class="stat-num" id="stat-days">—</div><div class="stat-lbl">Dias Juntos</div></div>
         <div class="stat-box"><div class="stat-num" id="stat-months">—</div><div class="stat-lbl">Meses</div></div>
         <div class="stat-box"><div class="stat-num" id="stat-photos">0</div><div class="stat-lbl">Memórias</div></div>
       </div>
       <div class="together-phrase" id="story-phrase" style="display:none"></div>
-      <div class="tl-section">
-        <div class="tl-title">Linha do Tempo</div>
-        <div class="tl-div"></div>
-        <div class="tl-list" id="tl-list">
-          <div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua linha do tempo ✿</div>
+
+      <!-- POSTS STORIES ROW -->
+      <div style="padding:0 20px;margin-bottom:6px">
+        <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(250,247,244,.4);margin-bottom:10px">Posts pro Meu Amor</div>
+        <div class="posts-stories-row" id="posts-stories-row">
+          <!-- novo post button -->
+          <div class="story-bubble" onclick="openPostModal()">
+            <div class="story-ring story-ring-new">
+              <div class="story-avatar story-avatar-new">+</div>
+            </div>
+            <div class="story-bubble-name">Novo Post</div>
+          </div>
+          <!-- posts renderizados via JS -->
         </div>
       </div>
+
+      <!-- POST COMPOSER MODAL -->
+      <div id="post-modal" style="display:none;position:fixed;inset:0;background:rgba(20,8,0,.85);z-index:800;align-items:flex-end;justify-content:center">
+        <div style="background:var(--ww);border-radius:24px 24px 0 0;padding:24px 20px 36px;width:100%;max-width:540px;animation:fadeUp .3s ease">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div style="font-family:'Lora',serif;font-size:18px;font-style:italic;color:var(--td)">Novo Post 💌</div>
+            <button onclick="closePostModal()" style="background:none;border:none;font-size:20px;color:var(--t);cursor:pointer">✕</button>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t);opacity:.8;margin-bottom:6px">De quem é esse post?</div>
+            <div style="display:flex;gap:10px">
+              <button id="post-from-c" onclick="selectPostAuthor('c')" style="flex:1;padding:10px;border:2px solid var(--pe);border-radius:12px;background:var(--cr);font-family:'Lora',serif;font-size:13px;font-style:italic;color:var(--td);cursor:pointer;transition:.2s">✿ Camila</button>
+              <button id="post-from-m" onclick="selectPostAuthor('m')" style="flex:1;padding:10px;border:2px solid var(--pe);border-radius:12px;background:var(--cr);font-family:'Lora',serif;font-size:13px;font-style:italic;color:var(--td);cursor:pointer;transition:.2s">❀ Marlon</button>
+            </div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t);opacity:.8;margin-bottom:6px">Escreva seu post</div>
+            <textarea id="post-text" placeholder="Meu amor, hoje acordei pensando em você..." style="width:100%;height:120px;border:1.5px solid var(--t);border-radius:12px;padding:12px 14px;font-family:'Lora',serif;font-size:14px;font-style:italic;color:var(--bk);background:var(--cr);resize:none;outline:none;line-height:1.7"></textarea>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:11px;color:var(--t);opacity:.6" id="post-date-preview"></div>
+            <button onclick="submitPost()" style="background:var(--t);border:none;border-radius:12px;padding:12px 28px;font-family:'Lora',serif;font-size:13px;font-style:italic;color:white;cursor:pointer;transition:.25s">Enviar 💌</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POST VIEWER MODAL -->
+      <div id="post-viewer" style="display:none;position:fixed;inset:0;background:rgba(20,8,0,.92);z-index:800;align-items:center;justify-content:center">
+        <div style="background:var(--ww);border-radius:24px;padding:28px 24px;width:min(420px,92vw);position:relative;animation:popIn .4s ease">
+          <button onclick="closePostViewer()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;color:var(--t);cursor:pointer">✕</button>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <div id="viewer-avatar" style="width:44px;height:44px;border-radius:50%;border:2.5px solid var(--go);overflow:hidden;background:var(--tp);display:flex;align-items:center;justify-content:center;flex-shrink:0"></div>
+            <div>
+              <div id="viewer-author" style="font-family:'Lora',serif;font-size:15px;font-style:italic;color:var(--td)"></div>
+              <div id="viewer-date" style="font-size:11px;color:var(--t);opacity:.7;margin-top:2px"></div>
+            </div>
+          </div>
+          <div id="viewer-text" style="font-family:'Lora',serif;font-size:16px;font-style:italic;color:var(--bk);line-height:1.8;padding:16px;background:var(--tp);border-radius:14px;border-left:3px solid var(--go)"></div>
+        </div>
+      </div>
+
+      <!-- LOVE STORIES TIMELINE -->
+      <div style="padding:0 20px;margin-top:8px">
+        <div style="font-family:'Lora',serif;font-size:20px;font-style:italic;color:rgba(250,247,244,.85);margin-bottom:6px">Love Stories</div>
+        <div style="width:44px;height:1px;background:var(--tl);opacity:.4;margin-bottom:18px"></div>
+        <div id="love-stories-list">
+          <div style="font-family:'Lora',serif;font-size:15px;font-style:italic;color:rgba(250,247,244,.3);text-align:center;padding:24px 0">Escreva o primeiro post para começar seus Love Stories ✿</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:16px;letter-spacing:10px;color:rgba(250,247,244,.15);padding:28px 0">✿ ❀ ✾ ❀ ✿</div>
     </div>
   </div>
 </div>
@@ -679,7 +776,8 @@ const STATE = {
   acordoC: '', acordoM: '',
   startDate: '',
   answers: {c: '', m: ''},
-  library: []
+  library: [],
+  posts: []
 };
 const PASS = '161124'; // v2.1
 
@@ -697,6 +795,7 @@ function loadState() {
     if (s.startDate) { STATE.startDate = s.startDate; document.getElementById('start-date').value = s.startDate; calcTogether(); }
     if (s.answers) { STATE.answers = s.answers; restoreAnswers(); }
     if (s.library) { STATE.library = s.library; renderLibrary(); }
+    if (s.posts) { STATE.posts = s.posts; renderPosts(); }
   } catch(e) {}
 }
 
@@ -1090,9 +1189,13 @@ function renderLibrary() {
   STATE.library.forEach((photo, idx) => {
     const card = document.createElement('div');
     card.className = 'photo-card';
+    const isVideo = photo.type === 'video' || (photo.src && (photo.src.includes('/video/') || photo.src.match(/\.(mp4|mov|webm|avi)$/i)));
+    const mediaHtml = isVideo
+      ? `<video class="card-video" src="${photo.src}" controls playsinline></video><span class="video-badge">▶ Vídeo</span>`
+      : `<img class="card-img" src="${photo.src}" alt="memória">`;
     card.innerHTML = `
       <div class="card-img-wrap">
-        <img class="card-img" src="${photo.src}" alt="memória">
+        ${mediaHtml}
         <button class="card-delete" onclick="deletePhoto(${idx})">✕</button>
       </div>
       <div class="card-body">
@@ -1170,7 +1273,7 @@ function updateStoryTab() {
   const sorted = [...STATE.library].filter(p => p.date).sort((a,b) => new Date(a.date) - new Date(b.date));
   const list = document.getElementById('tl-list');
   if (!sorted.length) {
-    list.innerHTML = '<div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua linha do tempo ✿</div>';
+    list.innerHTML = '<div class="tl-empty">Adicione fotos com datas na biblioteca para construir sua love stories ✿</div>';
     return;
   }
   list.innerHTML = sorted.slice(0,12).map((p,i) => `
@@ -1186,6 +1289,149 @@ function updateStoryTab() {
         <div class="tl-thumb"><img src="${p.src}" alt="memória"></div>
       </div>
     </div>`).join('');
+}
+
+// ── POSTS (Love Stories) ─────────────────────────────────
+let postAuthor = 'c';
+
+function openPostModal() {
+  document.getElementById('post-modal').style.display = 'flex';
+  updatePostDatePreview();
+  selectPostAuthor('c');
+  document.getElementById('post-text').focus();
+}
+
+function closePostModal() {
+  document.getElementById('post-modal').style.display = 'none';
+  document.getElementById('post-text').value = '';
+}
+
+function selectPostAuthor(who) {
+  postAuthor = who;
+  const btnC = document.getElementById('post-from-c');
+  const btnM = document.getElementById('post-from-m');
+  btnC.style.borderColor = who === 'c' ? 'var(--t)' : 'var(--pe)';
+  btnC.style.background = who === 'c' ? 'var(--tp)' : 'var(--cr)';
+  btnM.style.borderColor = who === 'm' ? 'var(--t)' : 'var(--pe)';
+  btnM.style.background = who === 'm' ? 'var(--tp)' : 'var(--cr)';
+}
+
+function updatePostDatePreview() {
+  const now = new Date();
+  const fmt = now.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'}) + ' · ' +
+    now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  const el = document.getElementById('post-date-preview');
+  if (el) el.textContent = fmt;
+}
+
+function submitPost() {
+  const text = document.getElementById('post-text').value.trim();
+  if (!text) { document.getElementById('post-text').style.borderColor = 'var(--t)'; return; }
+  const now = new Date();
+  const post = {
+    id: Date.now(),
+    author: postAuthor,
+    authorName: postAuthor === 'c' ? 'Camila' : 'Marlon',
+    text,
+    date: now.toISOString(),
+    dateLabel: now.toLocaleDateString('pt-BR', {day:'numeric',month:'long',year:'numeric'}) + ' · ' +
+      now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})
+  };
+  if (!STATE.posts) STATE.posts = [];
+  STATE.posts.unshift(post);
+  saveState();
+  renderPosts();
+  closePostModal();
+}
+
+function renderPosts() {
+  if (!STATE.posts) STATE.posts = [];
+  const row = document.getElementById('posts-stories-row');
+  if (!row) return;
+
+  // Keep the "novo post" button, re-render posts as story bubbles
+  const newBtn = row.children[0];
+  row.innerHTML = '';
+  row.appendChild(newBtn);
+
+  STATE.posts.slice(0, 10).forEach(post => {
+    const bubble = document.createElement('div');
+    bubble.className = 'story-bubble';
+    bubble.onclick = () => openPostViewer(post);
+    const photoSrc = post.author === 'c' ? STATE.photoC : STATE.photoM;
+    const avatarHtml = photoSrc
+      ? `<img src="${photoSrc}" alt="${post.authorName}">`
+      : `<span>${post.authorName.charAt(0)}</span>`;
+    bubble.innerHTML = `
+      <div class="story-ring ${post.author === 'c' ? 'story-ring-c' : 'story-ring-m'}">
+        <div class="story-avatar">${avatarHtml}</div>
+      </div>
+      <div class="story-bubble-name">${post.authorName}</div>`;
+    row.appendChild(bubble);
+  });
+
+  // Render Love Stories timeline
+  const list = document.getElementById('love-stories-list');
+  if (!list) return;
+  if (!STATE.posts.length) {
+    list.innerHTML = '<div style="font-family:\'Lora\',serif;font-size:15px;font-style:italic;color:rgba(250,247,244,.3);text-align:center;padding:24px 0">Escreva o primeiro post para começar seus Love Stories ✿</div>';
+    return;
+  }
+  list.innerHTML = '';
+  STATE.posts.forEach((post, i) => {
+    const photoSrc = post.author === 'c' ? STATE.photoC : STATE.photoM;
+    const avatarHtml = photoSrc
+      ? `<img src="${photoSrc}" alt="${post.authorName}">`
+      : post.authorName.charAt(0);
+    const item = document.createElement('div');
+    item.className = 'ls-card';
+    item.style.animationDelay = `${i * 0.05}s`;
+    item.innerHTML = `
+      <div class="ls-dot-wrap">
+        <div class="ls-dot"></div>
+        ${i < STATE.posts.length - 1 ? '<div class="ls-line"></div>' : ''}
+      </div>
+      <div class="ls-content" onclick="openPostViewer(STATE.posts[${i}])">
+        <div class="ls-header">
+          <div class="ls-avatar">${avatarHtml}</div>
+          <div class="ls-author">💌 Post de ${post.authorName}</div>
+          <div class="ls-date">${post.dateLabel}</div>
+        </div>
+        <div class="ls-text">"${post.text.length > 100 ? post.text.slice(0, 100) + '...' : post.text}"</div>
+        <button class="ls-delete" onclick="event.stopPropagation();deletePost(${i})">✕ remover</button>
+      </div>`;
+    list.appendChild(item);
+  });
+}
+
+function openPostViewer(post) {
+  const photoSrc = post.author === 'c' ? STATE.photoC : STATE.photoM;
+  const avatarEl = document.getElementById('viewer-avatar');
+  if (photoSrc) {
+    avatarEl.innerHTML = `<img src="${photoSrc}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  } else {
+    avatarEl.textContent = post.authorName.charAt(0);
+    avatarEl.style.fontFamily = "'Lora',serif";
+    avatarEl.style.fontSize = '18px';
+    avatarEl.style.fontStyle = 'italic';
+    avatarEl.style.color = 'var(--td)';
+  }
+  document.getElementById('viewer-author').textContent = '💌 Post de ' + post.authorName;
+  document.getElementById('viewer-date').textContent = post.dateLabel;
+  document.getElementById('viewer-text').textContent = post.text;
+  document.getElementById('post-viewer').style.display = 'flex';
+}
+
+function closePostViewer() {
+  document.getElementById('post-viewer').style.display = 'none';
+}
+
+function deletePost(idx) {
+  if (confirm('Remover este post?')) {
+    STATE.posts.splice(idx, 1);
+    saveState();
+    renderPosts();
+  }
 }
 
 // ── INIT ─────────────────────────────────────────────────
