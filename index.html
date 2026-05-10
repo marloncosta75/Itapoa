@@ -1340,6 +1340,8 @@ function submitPost() {
   if (!STATE.posts) STATE.posts = [];
   STATE.posts.unshift(post);
   saveState();
+  // Save to Firestore if available
+  if (window._savePostFn) window._savePostFn(post);
   renderPosts();
   closePostModal();
 }
@@ -1428,6 +1430,8 @@ function closePostViewer() {
 
 function deletePost(idx) {
   if (confirm('Remover este post?')) {
+    const post = STATE.posts[idx];
+    if (post && window._deletePostFn) window._deletePostFn(post.id);
     STATE.posts.splice(idx, 1);
     saveState();
     renderPosts();
@@ -1521,6 +1525,30 @@ async function loadLibraryFromFirestore() {
   } catch(e) { console.error('Firestore library load error:', e); return []; }
 }
 
+// ── SAVE POST TO FIRESTORE ──
+async function savePostToFirestore(post) {
+  try {
+    await setDoc(doc(db, 'itapua_posts', post.id.toString()), post);
+  } catch(e) { console.error('Firestore post save error:', e); }
+}
+
+// ── DELETE POST FROM FIRESTORE ──
+async function deletePostFromFirestore(id) {
+  try {
+    await deleteDoc(doc(db, 'itapua_posts', id.toString()));
+  } catch(e) { console.error('Firestore post delete error:', e); }
+}
+
+// ── LOAD POSTS FROM FIRESTORE ──
+async function loadPostsFromFirestore() {
+  try {
+    const snap = await getDocs(collection(db, 'itapua_posts'));
+    const posts = [];
+    snap.forEach(d => posts.push(d.data()));
+    return posts.sort((a,b) => b.id - a.id);
+  } catch(e) { console.error('Firestore posts load error:', e); return []; }
+}
+
 // ── OVERRIDE addLibPhotos TO USE CLOUDINARY ──
 const origInput = document.getElementById('file-lib');
 origInput.addEventListener('change', async function(e) {
@@ -1568,11 +1596,15 @@ window.loadFromFirestore = async function() {
   }
   // Load library
   const photos = await loadLibraryFromFirestore();
-  if (photos.length > 0) {
-    STATE.library = photos;
-    renderLibrary();
-  }
+  if (photos.length > 0) { STATE.library = photos; renderLibrary(); }
+  // Load posts
+  const posts = await loadPostsFromFirestore();
+  if (posts.length > 0) { STATE.posts = posts; renderPosts(); }
 };
+
+// ── EXPOSE POST FIRESTORE FUNCTIONS ──
+window._savePostFn = savePostToFirestore;
+window._deletePostFn = deletePostFromFirestore;
 
 // ── AUTO-SAVE CEREMONY ON CHANGE ──
 const origSaveState = window.saveState;
