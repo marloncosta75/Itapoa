@@ -802,6 +802,8 @@ function loadState() {
 // ── AUTH ─────────────────────────────────────────────────
 document.getElementById('auth-input').addEventListener('keydown', e => { if (e.key === 'Enter') doAuth(); });
 function doAuth() {
+  // Se Firebase já registrou sua versão, usa ela
+  if (window._firebaseDoAuth) { window._firebaseDoAuth(); return; }
   const v = document.getElementById('auth-input').value;
   if (v === PASS) {
     document.getElementById('auth-screen').style.display = 'none';
@@ -1632,8 +1634,8 @@ if (window._pendingFirebaseLoad) {
   window._pendingFirebaseLoad = null;
 }
 
-// Sobrescreve o doAuth com versão que carrega do Firestore
-window.doAuth = function() {
+// Registra versão com Firestore do doAuth
+window._firebaseDoAuth = function() {
   const v = document.getElementById('auth-input').value;
   if (v === '161124') {
     document.getElementById('auth-screen').style.display = 'none';
