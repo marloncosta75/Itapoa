@@ -806,26 +806,6 @@ function doAuth() {
   if (v === PASS) {
     document.getElementById('auth-screen').style.display = 'none';
     loadState();
-    // Se Firebase já carregou, chama direto. Senão, registra na fila
-    if (window._firebaseReady && window.loadFromFirestore) {
-      const indicator = document.createElement('div');
-      indicator.id = 'firebase-loading';
-      indicator.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--t);color:white;padding:8px 20px;border-radius:20px;font-family:var(--fd);font-size:13px;font-style:italic;z-index:9000;animation:fadeUp .3s ease';
-      indicator.textContent = 'Carregando seus dados... ✿';
-      document.body.appendChild(indicator);
-      window.loadFromFirestore().then(() => { const el = document.getElementById('firebase-loading'); if(el) el.remove(); });
-    } else {
-      window._pendingFirebaseLoad = function() {
-        if (window.loadFromFirestore) {
-          const indicator = document.createElement('div');
-          indicator.id = 'firebase-loading';
-          indicator.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--t);color:white;padding:8px 20px;border-radius:20px;font-family:var(--fd);font-size:13px;font-style:italic;z-index:9000;animation:fadeUp .3s ease';
-          indicator.textContent = 'Carregando seus dados... ✿';
-          document.body.appendChild(indicator);
-          window.loadFromFirestore().then(() => { const el = document.getElementById('firebase-loading'); if(el) el.remove(); });
-        }
-      };
-    }
   } else {
     document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
     const card = document.getElementById('auth-card');
@@ -1646,27 +1626,41 @@ window.deletePhoto = function(idx) {
 };
 
 // ── OVERRIDE doAuth TO LOAD FROM FIRESTORE ──
-// Registra que o Firebase está pronto e executa fila pendente
 window._firebaseReady = true;
 if (window._pendingFirebaseLoad) {
   window._pendingFirebaseLoad();
   window._pendingFirebaseLoad = null;
 }
 
-window.doAuth = async function() {
+// Sobrescreve o doAuth com versão que carrega do Firestore
+window.doAuth = function() {
   const v = document.getElementById('auth-input').value;
   if (v === '161124') {
     document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    loadState(); // localStorage primeiro para velocidade
-    // Mostra indicador de carregamento
-    const indicator = document.createElement('div');
-    indicator.id = 'firebase-loading';
-    indicator.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--t);color:white;padding:8px 20px;border-radius:20px;font-family:var(--fd);font-size:13px;font-style:italic;z-index:9000;animation:fadeUp .3s ease';
-    indicator.textContent = 'Carregando seus dados... ✿';
-    document.body.appendChild(indicator);
-    await loadFromFirestore();
-    indicator.remove();
+    loadState();
+    // Carrega do Firestore em background
+    Promise.all([
+      loadCeremonyFromFirestore(),
+      loadLibraryFromFirestore(),
+      loadPostsFromFirestore()
+    ]).then(([ceremony, photos, posts]) => {
+      if (ceremony) {
+        if (ceremony.photoC) { STATE.photoC = ceremony.photoC; setPhotoPreview('frame-c','ph-c',ceremony.photoC); setCelebPhoto('celeb-photo-c','celeb-name-c',ceremony.photoC); setTimeout(()=>setStoryPhoto('story-photo-c',ceremony.photoC),50); }
+        if (ceremony.photoM) { STATE.photoM = ceremony.photoM; setPhotoPreview('frame-m','ph-m',ceremony.photoM); setCelebPhoto('celeb-photo-m','celeb-name-m',ceremony.photoM); setTimeout(()=>setStoryPhoto('story-photo-m',ceremony.photoM),50); }
+        if (ceremony.acordoC) { STATE.acordoC = ceremony.acordoC; document.getElementById('acordo-c').value = ceremony.acordoC; }
+        if (ceremony.acordoM) { STATE.acordoM = ceremony.acordoM; document.getElementById('acordo-m').value = ceremony.acordoM; }
+        if (ceremony.startDate) { STATE.startDate = ceremony.startDate; document.getElementById('start-date').value = ceremony.startDate; calcTogether(); }
+        if (ceremony.answers) { STATE.answers = ceremony.answers; restoreAnswers(); }
+      }
+      if (photos && photos.length > 0) { STATE.library = photos; renderLibrary(); }
+      if (posts && posts.length > 0) { STATE.posts = posts; renderPosts(); }
+      const el = document.getElementById('firebase-loading');
+      if (el) el.remove();
+    }).catch(err => {
+      console.error('Firestore load error:', err);
+      const el = document.getElementById('firebase-loading');
+      if (el) el.remove();
+    });
   } else {
     document.getElementById('auth-err').textContent = 'Senha incorreta. Tente novamente.';
     const card = document.getElementById('auth-card');
