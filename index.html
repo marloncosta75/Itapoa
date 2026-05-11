@@ -194,17 +194,17 @@ input,textarea,select{font-family:var(--fb)}
 
 .rings-section{text-align:center;padding:8px 20px 16px}
 .rings-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--t);opacity:.5;margin-bottom:12px}
-.rings-row{display:flex;align-items:center;justify-content:center;gap:12px}
-.ring{width:52px;height:52px;border-radius:50%;transition:transform 1.2s cubic-bezier(.34,1.56,.64,1)}
-.ring-c{border:6px solid var(--go)}
-.ring-m{border:6px solid #A8936A}
-.ring-c.merged{transform:translateX(20px) scale(1.1)}
-.ring-m.merged{transform:translateX(-20px) scale(1.1)}
-.ring-connector{width:32px;height:2px;background:var(--go);opacity:.3;transition:opacity .5s}
-.ring-connector.active{opacity:.8}
-.ring-floret{font-size:18px;color:var(--t);opacity:.5;animation:shimmer 3s ease-in-out infinite}
+.rings-row{display:flex;align-items:center;justify-content:center;gap:8px;position:relative}
+.ring{transition:transform 1.2s cubic-bezier(.34,1.56,.64,1)}
+.ring-c.merged{transform:translateX(24px) scale(1.08)}
+.ring-m.merged{transform:translateX(-24px) scale(1.08)}
+.ring-connector{width:0;height:0;opacity:0;transition:opacity .5s}
+.ring-connector.active{opacity:1}
+.ring-floret{font-size:16px;color:var(--t);opacity:.45;animation:shimmer 3s ease-in-out infinite}
 .rings-msg{margin-top:12px;font-family:var(--fd);font-size:15px;font-style:italic;color:var(--td);animation:fadeUp .5s ease;display:none}
 .rings-msg.show{display:block}
+.ring-heart-joined{display:none;animation:popIn .5s ease,heartbeat 1.4s ease-in-out 0.5s infinite}
+.ring-heart-joined.show{display:block}
 
 .question-card{background:linear-gradient(135deg,#FFF0F0,#FFB8B8);border:1px solid rgba(242,201,184,.6);border-radius:22px;padding:24px 20px;max-width:500px;margin:0 auto;text-align:center}
 .question-floret{font-size:14px;letter-spacing:8px;color:var(--t);opacity:.5;margin-bottom:10px}
@@ -595,14 +595,61 @@ input,textarea,select{font-family:var(--fb)}
         </div>
       </div>
 
-      <!-- Rings -->
+      <!-- Rings A5 -->
       <div class="rings-section">
         <div class="rings-label">Alianças</div>
         <div class="rings-row">
           <span class="ring-floret">✿</span>
-          <div class="ring ring-c" id="ring-c"></div>
-          <div class="ring-connector" id="ring-conn"></div>
-          <div class="ring ring-m" id="ring-m"></div>
+          <svg id="rings-svg" width="160" height="110" viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ga5a" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFF8C0"/>
+                <stop offset="25%" stop-color="#E4B030"/>
+                <stop offset="55%" stop-color="#A07800"/>
+                <stop offset="80%" stop-color="#D4A028"/>
+                <stop offset="100%" stop-color="#603800"/>
+              </linearGradient>
+              <linearGradient id="ga5b" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#FAECC0"/>
+                <stop offset="25%" stop-color="#C89020"/>
+                <stop offset="55%" stop-color="#886000"/>
+                <stop offset="80%" stop-color="#D0A030"/>
+                <stop offset="100%" stop-color="#4A2800"/>
+              </linearGradient>
+              <linearGradient id="ga5heart" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF9090"/>
+                <stop offset="50%" stop-color="#CC2020"/>
+                <stop offset="100%" stop-color="#800000"/>
+              </linearGradient>
+              <linearGradient id="ga5shine" x1="0%" y1="0%" x2="30%" y2="60%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </linearGradient>
+              <filter id="fa5shadow">
+                <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#5A3000" flood-opacity="0.5"/>
+              </filter>
+              <filter id="fa5glow">
+                <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFD700" flood-opacity="0.7"/>
+              </filter>
+              <filter id="fa5heartglow">
+                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#FF4040" flood-opacity="0.6"/>
+              </filter>
+            </defs>
+            <g id="ring-c" class="ring">
+              <ellipse cx="47" cy="62" rx="28" ry="28" fill="none" stroke="url(#ga5a)" stroke-width="11" filter="url(#fa5shadow)"/>
+              <ellipse cx="47" cy="62" rx="28" ry="28" fill="none" stroke="url(#ga5shine)" stroke-width="11"/>
+              <circle cx="47" cy="36" r="3.5" fill="#FFF8A0" opacity="0.9" filter="url(#fa5glow)"/>
+            </g>
+            <g id="ring-m" class="ring">
+              <ellipse cx="113" cy="62" rx="28" ry="28" fill="none" stroke="url(#ga5b)" stroke-width="11" filter="url(#fa5shadow)"/>
+              <ellipse cx="113" cy="62" rx="28" ry="28" fill="none" stroke="url(#ga5shine)" stroke-width="11"/>
+              <circle cx="113" cy="36" r="3.5" fill="#FFF8A0" opacity="0.9" filter="url(#fa5glow)"/>
+            </g>
+            <g id="ring-conn" class="ring-connector"></g>
+            <path d="M80 18 C80 13 74 8 69 10 C64 12 64 19 69 24 L80 34 L91 24 C96 19 96 12 91 10 C86 8 80 13 80 18 Z" fill="url(#ga5heart)" filter="url(#fa5heartglow)"/>
+            <path d="M73 14 C73 12 71 11 70 12" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="80" cy="19" r="1.5" fill="white" opacity="0.7"/>
+          </svg>
           <span class="ring-floret" style="animation-delay:1.5s">❀</span>
         </div>
         <div class="rings-msg" id="rings-msg">💍 Unidos para sempre 💍</div>
